@@ -1,0 +1,26 @@
+<roster>
+<person>
+	<name>Name</name> //string
+	<grade>#</grade> //int
+	<team>Team</team> //string
+	<position>Position</position> //string
+	<email>a@b.com</email> //string
+	<discord>
+		<username>Username</username> //string
+		<number>####</number> //int
+	</discord>
+	<attendance>
+		<date>YYYY-MM-DD</date> //date
+		...
+	</attendance>
+	<tasks>
+		<task>
+			<title>Title</title> //string
+			<description>Description</description> //string
+			<due>YYYY-MM-DD</due> //date
+		</task>
+		...
+	</tasks>
+</person>
+...
+</roster>
