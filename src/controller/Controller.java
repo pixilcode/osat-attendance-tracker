@@ -15,6 +15,13 @@ public class Controller {
 	}
 	
 	public static void test() {
+		try {
+			Roster test = new Roster("src/model/test.xml");
+			test.addPerson("JOHN");
+			test.addPerson("JOE");
+		} catch(IOException ioe) {
+			ioe.printStackTrace();
+		}
 		
 	}
 

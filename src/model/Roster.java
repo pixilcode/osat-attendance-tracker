@@ -17,6 +17,8 @@ public class Roster implements Iterable<Person> {
 	private Path location;
 	private ArrayList<Person> members;
 	
+	boolean exists;
+	
 	//Throw IOException so that GUI can alert person of error
 	public Roster(String location) throws IOException {
 		
@@ -30,11 +32,12 @@ public class Roster implements Iterable<Person> {
 		this.location = Paths.get(location);
 		
 		//If the location
-		if(this.location.toFile().exists()) readXMLfile(this.location);
+		if(this.location.toFile().exists()) {
+			readXMLfile(this.location);
+			exists = true;
+		}
 		else {
-			File f = new File(location.toString());
-			f.getParentFile().mkdirs();
-			f.createNewFile();
+			exists = false;
 		}
 		
 		
@@ -146,6 +149,11 @@ public class Roster implements Iterable<Person> {
 	
 	//Throws IOException so that GUI can alert person of error
 	public void writeXMLfile() throws IOException {
+		
+		//If the file does not exist, make it
+		File f = new File(location.toString());
+		f.getParentFile().mkdirs();
+		f.createNewFile();
 		
 		//Create the root element
 		Element roster = new Element("roster");
