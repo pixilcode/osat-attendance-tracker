@@ -7,12 +7,9 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-import java.util.Spliterator;
-import java.util.function.Consumer;
-
 import nu.xom.*;
 
-public class Roster {
+public class Roster implements Iterable<Person> {
 	
 	//The location of the xml file
 	private Path location;
@@ -200,7 +197,48 @@ public class Roster {
 	
 	public ArrayList<Person> getMembers() {
 		return members;
-	}	
+	}
 	
+	public Iterator<Person> iterator() {
+		return new RosterIterator(members);
+	}
+	
+	//For iteration in a foreach loop
+	private class RosterIterator implements Iterator<Person> {
+		
+		private final ArrayList<Person> members;
+		private int cursor;
+		
+		RosterIterator(ArrayList<Person> members) {
+			
+			cursor = 0;
+			this.members = members;
+			
+		}
+
+		public boolean hasNext() {
+			if(cursor >= members.size()) {
+				return false;
+			} else {
+				return true;
+			}
+		}
+
+		public Person next() {
+			if(!hasNext()) {
+				throw new NoSuchElementException();
+			}
+			
+			return members.get(cursor++);
+			
+		}
+
+		public void remove() {
+			throw new UnsupportedOperationException();
+		}
+		
+		
+		
+	}
 	
 }
