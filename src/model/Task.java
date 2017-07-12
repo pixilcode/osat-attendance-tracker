@@ -11,7 +11,9 @@ public class Task {
 	private String description;
 	private GregorianCalendar due;
 	
-	public Task(String title, String description, int yearDue, int monthDue, int dayDue) {
+	private final int tempID;
+	
+	public Task(String title, String description, int yearDue, int monthDue, int dayDue, int tempID) {
 		
 		//Set title and description of task
 		this.title = title;
@@ -20,9 +22,12 @@ public class Task {
 		//Set the day that the task is due (month is 0-based)
 		this.due = new GregorianCalendar(yearDue, --monthDue, dayDue);
 		
+		//Set the temporary ID
+		this.tempID = tempID;
+		
 	}
 	
-	public Task(String title, String description, GregorianCalendar due) {
+	public Task(String title, String description, GregorianCalendar due, int tempID) {
 		
 		//Set title and description of task
 		this.title = title;
@@ -30,6 +35,9 @@ public class Task {
 		
 		//Set the due date
 		this.due = due;
+		
+		//Set the temporary ID
+		this.tempID = tempID;
 		
 	}
 	
@@ -57,6 +65,10 @@ public class Task {
 		this.due = due;
 	}
 
+	public int getTempID() {
+		return tempID;
+	}
+	
 	//Check to see if the task is due
 	public boolean isDue() {
 		

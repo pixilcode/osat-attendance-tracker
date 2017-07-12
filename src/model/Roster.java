@@ -7,6 +7,8 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+
+import controller.Controller;
 import nu.xom.*;
 
 public class Roster implements Iterable<Person> {
@@ -15,20 +17,26 @@ public class Roster implements Iterable<Person> {
 	private Path location;
 	private ArrayList<Person> members;
 	
-	//The next ID to be assigned
-	private int nextID;
-	
 	//Throw IOException so that GUI can alert person of error
 	public Roster(String location) throws IOException {
 		
+		//Reset Controller variables
+		Controller.resetPersonID();
+		Controller.resetTaskID();
+		
+		//Create a new array for members
+		this.members = new ArrayList<Person>();
+		
 		this.location = Paths.get(location);
-		if(Files.exists(this.location)) {
-			readXMLfile(this.location);
-		} else {
-			Files.createFile(Paths.get(location));
-			this.members = new ArrayList<Person>();
-			this.nextID = 0;
+		
+		//If the location
+		if(this.location.toFile().exists()) readXMLfile(this.location);
+		else {
+			File f = new File(location.toString());
+			f.getParentFile().mkdirs();
+			f.createNewFile();
 		}
+		
 		
 	}
 	
@@ -37,7 +45,7 @@ public class Roster implements Iterable<Person> {
 			
 		try {
 			//Create the XML doc
-			Builder builder = new Builder();
+			Builder builder = new Builder(false);
 			Document doc = builder.build(location.toFile());
 			
 			//Get the root element
@@ -87,7 +95,7 @@ public class Roster implements Iterable<Person> {
 					int day = Integer.parseInt(date.substring(8));
 					
 					//Convert to a GregorianCalendar and add to array
-					attendance.add(new GregorianCalendar(year, month, day));
+					attendance.add(new GregorianCalendar(year, month - 1, day));
 					
 				}
 				
@@ -119,15 +127,12 @@ public class Roster implements Iterable<Person> {
 					GregorianCalendar due = new GregorianCalendar(year, month, day);
 					
 					//Create new Task and add to array
-					tasks.add(new Task(title, description, due));
+					tasks.add(new Task(title, description, due, Controller.getTaskID()));
 					
 				}
 				
 				//Create Person object and add to array
-				members.add(new Person(name, info, attendance, tasks, nextID));
-				
-				//Increase the ID number
-				nextID++;
+				members.add(new Person(name, info, attendance, tasks, Controller.getPersonID()));
 				
 			}
 			
@@ -144,13 +149,6 @@ public class Roster implements Iterable<Person> {
 		
 		//Create the root element
 		Element roster = new Element("roster");
-		
-		//Add XML Schema attributes (xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" and xsi:schemaLocation="urn:MyData http://www.example.com/MyData.xsd") 
-		Attribute schemaInstance = new Attribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
-		Attribute schemaLocation = new Attribute("xsi:noNamespaceSchemaLocation", "roster.xsd");
-		
-		roster.addAttribute(schemaInstance);
-		roster.addAttribute(schemaLocation);
 		
 		//Add each person into the root element
 		for(int i = 0; i < members.size(); i++) {
@@ -182,13 +180,11 @@ public class Roster implements Iterable<Person> {
 	}
 	
 	public void addPerson(String name) {
-		members.add(new Person(name, nextID));
-		nextID++;
+		members.add(new Person(name, Controller.getPersonID()));
 	}
 	
 	public void addPerson(String name, HashMap<String, String> info) {
-		members.add(new Person(name, info, nextID));
-		nextID++;
+		members.add(new Person(name, info, Controller.getPersonID()));
 	}
 	
 	public Path getLocation() {

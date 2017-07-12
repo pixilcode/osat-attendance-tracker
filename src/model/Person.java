@@ -66,10 +66,6 @@ public class Person {
 		return info;
 	}
 	
-	public void setInfo(HashMap<String, String> info) {
-		this.info = info;
-	}
-	
 	public ArrayList<GregorianCalendar> getAttendance() {
 		return attendance;
 	}
@@ -80,6 +76,35 @@ public class Person {
 	
 	public int getTempID() {
 		return tempID;
+	}
+	
+	public void addInfo(String attribute, String value) {
+		info.put(attribute, value);
+	}
+	
+	public void removeInfo(String attribute) {
+		info.remove(attribute);
+	}
+	
+	public void addAttendedDay(GregorianCalendar date) {
+		attendance.add(date);
+	}
+	
+	public void removeAttendedDay(GregorianCalendar date) {
+		attendance.remove(date);
+	}
+	
+	public void addTask(Task task) {
+		tasks.add(task);
+	}
+	
+	public void editTask(Task prevTask, Task newTask) {
+		tasks.add(tasks.indexOf(prevTask), newTask);
+		tasks.remove(prevTask);
+	}
+	
+	public void removeTask(Task task) {
+		tasks.remove(task);
 	}
 	
 	public Element toXMLelement() {
