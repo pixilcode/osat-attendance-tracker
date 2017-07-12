@@ -28,14 +28,14 @@ public class Person {
 	private ArrayList<Task> tasks;
 	
 	//Temporary ID
-	private int tempID;
+	final private int TEMP_ID;
 	
 	public Person(String name, int tempID) {
 		this.name = name;
 		this.info = new HashMap<String, String>();
 		this.attendance = new ArrayList<GregorianCalendar>();
 		this.tasks = new ArrayList<Task>();
-		this.tempID = tempID;
+		this.TEMP_ID = tempID;
 	}
 	
 	public Person(String name, HashMap<String, String> info, int tempID) {
@@ -43,7 +43,7 @@ public class Person {
 		this.info = info;
 		this.attendance = new ArrayList<GregorianCalendar>();
 		this.tasks = new ArrayList<Task>();
-		this.tempID = tempID;
+		this.TEMP_ID = tempID;
 	}
 	
 	public Person(String name, HashMap<String, String> info, ArrayList<GregorianCalendar> attendance, ArrayList<Task> tasks, int tempID) {
@@ -51,7 +51,7 @@ public class Person {
 		this.info = info;
 		this.attendance = attendance;
 		this.tasks = tasks;
-		this.tempID = tempID;
+		this.TEMP_ID = tempID;
 	}
 	
 	public String getName() {
@@ -75,7 +75,7 @@ public class Person {
 	}
 	
 	public int getTempID() {
-		return tempID;
+		return TEMP_ID;
 	}
 	
 	public void addInfo(String attribute, String value) {

@@ -11,7 +11,7 @@ public class Task {
 	private String description;
 	private GregorianCalendar due;
 	
-	private final int tempID;
+	private final int TEMP_ID;
 	
 	public Task(String title, String description, int yearDue, int monthDue, int dayDue, int tempID) {
 		
@@ -23,7 +23,7 @@ public class Task {
 		this.due = new GregorianCalendar(yearDue, --monthDue, dayDue);
 		
 		//Set the temporary ID
-		this.tempID = tempID;
+		this.TEMP_ID = tempID;
 		
 	}
 	
@@ -37,7 +37,7 @@ public class Task {
 		this.due = due;
 		
 		//Set the temporary ID
-		this.tempID = tempID;
+		this.TEMP_ID = tempID;
 		
 	}
 	
@@ -66,7 +66,7 @@ public class Task {
 	}
 
 	public int getTempID() {
-		return tempID;
+		return TEMP_ID;
 	}
 	
 	//Check to see if the task is due

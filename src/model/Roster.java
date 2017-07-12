@@ -48,7 +48,7 @@ public class Roster implements Iterable<Person> {
 			
 		try {
 			//Create the XML doc
-			Builder builder = new Builder(false);
+			Builder builder = new Builder();
 			Document doc = builder.build(location.toFile());
 			
 			//Get the root element
@@ -150,10 +150,16 @@ public class Roster implements Iterable<Person> {
 	//Throws IOException so that GUI can alert person of error
 	public void writeXMLfile() throws IOException {
 		
-		//If the file does not exist, make it
-		File f = new File(location.toString());
-		f.getParentFile().mkdirs();
-		f.createNewFile();
+		try {
+			//If the file does not exist, make it
+			File f = new File(location.toString());
+			f.getParentFile().mkdirs();
+			f.createNewFile();
+		} catch(NullPointerException npe) {
+			//If the file doesn't have parent files, make one without referencing it
+			File f = new File(location.toString());
+			f.createNewFile();
+		}
 		
 		//Create the root element
 		Element roster = new Element("roster");
