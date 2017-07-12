@@ -9,9 +9,9 @@ import nu.xom.*;
 
 public class Person {
 	
-	String name;
+	private String name;
 	
-	HashMap<String, String> info;
+	private HashMap<String, String> info;
 	/*
 	
 	Recommended attributes for Robotics
@@ -24,44 +24,62 @@ public class Person {
 	
 	*/
 		
-	ArrayList<GregorianCalendar> attendance;
-	ArrayList<Task> tasks;
+	private ArrayList<GregorianCalendar> attendance;
+	private ArrayList<Task> tasks;
 	
-	public Person(String name, HashMap<String, String> info, ArrayList<GregorianCalendar> attendance, ArrayList<Task> tasks) {
+	//Temporary ID
+	private int tempID;
+	
+	public Person(String name, int tempID) {
+		this.name = name;
+		this.info = new HashMap<String, String>();
+		this.attendance = new ArrayList<GregorianCalendar>();
+		this.tasks = new ArrayList<Task>();
+		this.tempID = tempID;
+	}
+	
+	public Person(String name, HashMap<String, String> info, int tempID) {
+		this.name = name;
+		this.info = info;
+		this.attendance = new ArrayList<GregorianCalendar>();
+		this.tasks = new ArrayList<Task>();
+		this.tempID = tempID;
+	}
+	
+	public Person(String name, HashMap<String, String> info, ArrayList<GregorianCalendar> attendance, ArrayList<Task> tasks, int tempID) {
 		this.name = name;
 		this.info = info;
 		this.attendance = attendance;
 		this.tasks = tasks;
+		this.tempID = tempID;
 	}
-
 	
 	public String getName() {
 		return name;
 	}
-
 	
 	public void setName(String name) {
 		this.name = name;
 	}
-
 	
 	public HashMap<String, String> getInfo() {
 		return info;
 	}
-
 	
 	public void setInfo(HashMap<String, String> info) {
 		this.info = info;
 	}
-
 	
 	public ArrayList<GregorianCalendar> getAttendance() {
 		return attendance;
 	}
-
 	
 	public ArrayList<Task> getTasks() {
 		return tasks;
+	}
+	
+	public int getTempID() {
+		return tempID;
 	}
 	
 	public Element toXMLelement() {

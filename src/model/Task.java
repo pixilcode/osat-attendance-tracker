@@ -7,9 +7,9 @@ import nu.xom.*;
 
 public class Task {
 	
-	String title;
-	String description;
-	GregorianCalendar due;
+	private String title;
+	private String description;
+	private GregorianCalendar due;
 	
 	public Task(String title, String description, int yearDue, int monthDue, int dayDue) {
 		

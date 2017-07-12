@@ -2,8 +2,8 @@ package model;
 
 public class DiscordAccount {
 	
-	String username;
-	int number;
+	private String username;
+	private int number;
 	
 	public DiscordAccount(String username, int number) {
 		
