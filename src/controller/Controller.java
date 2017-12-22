@@ -1,6 +1,6 @@
 package controller;
 
-import java.io.IOException;
+import java.nio.file.Path;
 
 import model.*;
 import view.*;
@@ -15,7 +15,7 @@ public class Controller {
 	}
 	
 	public static void test() {
-		
+		new WelcomeFrame();
 	}
 
 	public static void resetPersonID() {
@@ -32,6 +32,11 @@ public class Controller {
 	
 	public static int getTaskID() {
 		return nextTaskID++;
+	}
+
+	public static Path getLocation() {
+		// TODO Get location through GUI
+		return null;
 	}
 
 }

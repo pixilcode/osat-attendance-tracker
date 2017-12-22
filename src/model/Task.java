@@ -9,8 +9,15 @@ public class Task {
 	
 	private String title;
 	private String description;
+	
+	/**
+	 * The date by which the task should be done
+	 */
 	private GregorianCalendar due;
 	
+	/**
+	 * A temporary ID for management
+	 */
 	private final int TEMP_ID;
 	
 	public Task(String title, String description, int yearDue, int monthDue, int dayDue, int tempID) {
@@ -69,7 +76,10 @@ public class Task {
 		return TEMP_ID;
 	}
 	
-	//Check to see if the task is due
+	/**
+	 * Check to see if the task is due
+	 * @return true if the task is due
+	 */
 	public boolean isDue() {
 		
 		GregorianCalendar today = new GregorianCalendar();
@@ -80,6 +90,10 @@ public class Task {
 		
 	}
 	
+	/**
+	 * Convert the task to an XML element
+	 * @return the task as an XML element
+	 */
 	public Element toXMLelement() {
 		
 		//Create elements

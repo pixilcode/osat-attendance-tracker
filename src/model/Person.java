@@ -11,6 +11,9 @@ public class Person {
 	
 	private String name;
 	
+	/**
+	 * Info associated with the person
+	 */
 	private HashMap<String, String> info;
 	/*
 	
@@ -23,13 +26,26 @@ public class Person {
 	String discordAccount
 	
 	*/
-		
+	
+	/**
+	 * A collection of days that the person has attended
+	 */
 	private ArrayList<GregorianCalendar> attendance;
+	
+	/**
+	 * The tasks assigned to the person
+	 */
 	private ArrayList<Task> tasks;
 	
-	//Temporary ID
+	/**
+	 * A temporary ID for management
+	 */
 	final private int TEMP_ID;
 	
+	/**
+	 * @param name the name of the person
+	 * @param tempID the temporary ID of the person
+	 */
 	public Person(String name, int tempID) {
 		this.name = name;
 		this.info = new HashMap<String, String>();
@@ -38,6 +54,11 @@ public class Person {
 		this.TEMP_ID = tempID;
 	}
 	
+	/**
+	 * @param name the name of the person
+	 * @param info a collection of info about the person
+	 * @param tempID the temporary ID of the person
+	 */
 	public Person(String name, HashMap<String, String> info, int tempID) {
 		this.name = name;
 		this.info = info;
@@ -46,6 +67,13 @@ public class Person {
 		this.TEMP_ID = tempID;
 	}
 	
+	/**
+	 * @param name the name of the person
+	 * @param info a collection of info about the person
+	 * @param attendance a collection of days the person has attended
+	 * @param tasks
+	 * @param tempID
+	 */
 	public Person(String name, HashMap<String, String> info, ArrayList<GregorianCalendar> attendance, ArrayList<Task> tasks, int tempID) {
 		this.name = name;
 		this.info = info;
@@ -97,7 +125,10 @@ public class Person {
 	public void addTask(Task task) {
 		tasks.add(task);
 	}
-	
+	/**
+	 * @param prevTask the task to be edited
+	 * @param newTask the new version of the task
+	 */
 	public void editTask(Task prevTask, Task newTask) {
 		tasks.add(tasks.indexOf(prevTask), newTask);
 		tasks.remove(prevTask);
@@ -107,6 +138,10 @@ public class Person {
 		tasks.remove(task);
 	}
 	
+	/**
+	 * Convert the person to an XML element
+	 * @return the person as an XML element
+	 */
 	public Element toXMLelement() {
 		
 		//Create elements (info elements created later)

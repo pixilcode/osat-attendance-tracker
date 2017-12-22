@@ -13,12 +13,38 @@ import nu.xom.*;
 
 public class Roster implements Iterable<Person> {
 	
-	//The location of the xml file
+	/**
+	 * The location of the XML file
+	 */
 	private Path location;
+	
+	/**
+	 * The members on the roster
+	 */
 	private ArrayList<Person> members;
 	
+	/**
+	 * Whether or not the roster exists
+	 */
 	boolean exists;
 	
+	/**
+	 * Initialize an empty roster
+	 */
+	public Roster() {
+		Controller.resetPersonID();
+		Controller.resetTaskID();
+		
+		this.members = new ArrayList<Person>();
+		
+		this.location = null;
+		this.exists = false;
+	}
+	
+	/**
+	 * @param location the location of the roster
+	 * @throws IOException the XML file is unreadable
+	 */
 	//Throw IOException so that GUI can alert person of error
 	public Roster(String location) throws IOException {
 		
@@ -31,7 +57,7 @@ public class Roster implements Iterable<Person> {
 		
 		this.location = Paths.get(location);
 		
-		//If the location
+		//If the location exists
 		if(this.location.toFile().exists()) {
 			readXMLfile(this.location);
 			exists = true;
@@ -43,6 +69,10 @@ public class Roster implements Iterable<Person> {
 		
 	}
 	
+	/**
+	 * @param location the location of the XML file 
+	 * @throws IOException the XML file is unreadable
+	 */
 	//Throw IOException so that GUI can alert person of error
 	private void readXMLfile(Path location) throws IOException {
 			
@@ -147,8 +177,14 @@ public class Roster implements Iterable<Person> {
 		
 	}
 	
+	/**
+	 * Compile the XML document and write it
+	 * @throws IOException error when creating file
+	 */
 	//Throws IOException so that GUI can alert person of error
 	public void writeXMLfile() throws IOException {
+		
+		if(location.equals(null)) location = Controller.getLocation();
 		
 		try {
 			//If the file does not exist, make it
@@ -227,22 +263,20 @@ public class Roster implements Iterable<Person> {
 		}
 
 		public boolean hasNext() {
-			if(cursor >= members.size()) {
+			if(cursor >= members.size())
 				return false;
-			} else {
+			else
 				return true;
-			}
 		}
-
+		
 		public Person next() {
-			if(!hasNext()) {
+			if(!hasNext())
 				throw new NoSuchElementException();
-			}
 			
 			return members.get(cursor++);
 			
 		}
-
+		
 		public void remove() {
 			throw new UnsupportedOperationException();
 		}
