@@ -1,8 +1,6 @@
 package controller;
 
-import java.awt.datatransfer.SystemFlavorMap;
 import java.nio.file.Path;
-
 import model.*;
 import view.*;
 import view.graphicUI.WelcomeFrame;
@@ -11,6 +9,7 @@ public class Controller {
 	
 	private static int nextPersonID = 0;
 	private static int nextTaskID = 0;
+	private static UserInterface ui;
 	
 	public static void run() {
 		

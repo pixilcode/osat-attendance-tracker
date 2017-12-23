@@ -1,11 +1,20 @@
 package view.graphicUI;
 
 import java.awt.*;
+import java.awt.event.*;
 import javax.swing.*;
 
-public class WelcomeFrame extends JFrame {
+public class WelcomeFrame extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
+	
+	private static final int WINDOW_WIDTH = 300;
+	private static final int WINDOW_HEIGHT = 300;
+	
+	private final JTextField locText;
+	private final JButton browseButton;
+	private final JButton loadButton;
+	private final JButton newButton;
 	
 	public WelcomeFrame() {
 		
@@ -13,6 +22,25 @@ public class WelcomeFrame extends JFrame {
 		super("ON A ROLL");
 		setLookAndFeel();
 		setSize(new Dimension(600, 150));
+		setLayout(new BorderLayout());
+		
+		//Create spacers
+		JPanel[] spacer = new JPanel[4];
+		int top = 0;
+		int right = 1;
+		int bottom = 2;
+		int left = 3;
+		for(int i = 0; i < spacer.length; i++) spacer[i] = new JPanel();
+		spacer[top].setSize(new Dimension(WINDOW_WIDTH, 50));
+		spacer[bottom].setSize(new Dimension(WINDOW_WIDTH, 50));
+		spacer[right].setSize(new Dimension(50, WINDOW_HEIGHT-100));
+		spacer[right].setSize(new Dimension(50, WINDOW_HEIGHT-100));
+		
+		//Add spacers
+		add(spacer[top], BorderLayout.NORTH);
+		add(spacer[bottom], BorderLayout.SOUTH);
+		add(spacer[left], BorderLayout.WEST);
+		add(spacer[right], BorderLayout.EAST);
 		
 		//Make a JPanel to add everything to and format it
 		JPanel panel = new JPanel();
@@ -33,33 +61,35 @@ public class WelcomeFrame extends JFrame {
 		panel.add(wrapper);
 		
 		//Add a place to find a file
-		// TODO make a specialized browsing button that inserts location in location
 		wrapper = new JPanel();
 		wrapper.setLayout(new FlowLayout());
 		JPanel location = new JPanel();
 		location.setLayout(new BoxLayout(location, BoxLayout.X_AXIS));
-		JTextField locationText = new JTextField(10);
-		JButton browse = new JButton("Browse");
-		location.add(locationText);
-		location.add(browse);
+		locText = new JTextField(10);
+		browseButton = new JButton("Browse");
+		browseButton.addActionListener(this);
+		location.add(locText);
+		location.add(browseButton);
+		loadButton = new JButton("Load");
+		loadButton.addActionListener(this);
 		wrapper.add(location);
-		JButton load = new JButton("Load");
-		wrapper.add(load);
+		wrapper.add(loadButton);
 		panel.add(wrapper);
 		
 		//Add a new button
 		wrapper = new JPanel();
-		JButton newRoster = new JButton("New");
-		wrapper.add(newRoster);
+		newButton = new JButton("New");
+		newButton.addActionListener(this);
+		wrapper.add(newButton);
 		panel.add(wrapper);
 		
 		//Add panel to the frame
-		add(panel);
+		add(panel, BorderLayout.CENTER);
 		
 		//Set the program to exit on close
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		//Pack and make visible
+		//Make visible
 		setVisible(true);
 		
 	}
@@ -70,6 +100,21 @@ public class WelcomeFrame extends JFrame {
 		} catch(Exception e) {
 			//and ignore
 		}
+	}
+
+	public void actionPerformed(ActionEvent event) {
+		Object source = event.getSource();
+		
+		//Discover the source
+		if(source == browseButton) {
+			//Do something
+		}else if(source == loadButton) {
+			//Do something else
+		}else if(source == newButton) {
+			dispose();
+			new NewRosterFrame();
+		}
+		
 	}
 	
 }
