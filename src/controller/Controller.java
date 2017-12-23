@@ -1,9 +1,11 @@
 package controller;
 
+import java.awt.datatransfer.SystemFlavorMap;
 import java.nio.file.Path;
 
 import model.*;
 import view.*;
+import view.graphicUI.WelcomeFrame;
 
 public class Controller {
 	
