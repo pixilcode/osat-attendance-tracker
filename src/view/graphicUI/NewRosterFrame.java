@@ -4,12 +4,9 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class NewRosterFrame extends JFrame implements ActionListener {
+public class NewRosterFrame extends BasicFrame implements ActionListener {
 	
 	private static final long serialVersionUID = 1L;
-	
-	private static final int WINDOW_WIDTH = 500;
-	private static final int WINDOW_HEIGHT = 400;
 	
 	private final JFileChooser dir;
 	private final JTextField name;
@@ -19,26 +16,7 @@ public class NewRosterFrame extends JFrame implements ActionListener {
 	public NewRosterFrame() {
 		
 		//Setup the frame
-		super("New Roster - ON A ROLL");
-		setLayout(new BorderLayout());
-		
-		//Create spacers
-		JPanel[] spacer = new JPanel[4];
-		int top = 0;
-		int right = 1;
-		int bottom = 2;
-		int left = 3;
-		for(int i = 0; i < spacer.length; i++) spacer[i] = new JPanel();
-		spacer[top].setSize(new Dimension(WINDOW_WIDTH, 50));
-		spacer[bottom].setSize(new Dimension(WINDOW_WIDTH, 50));
-		spacer[right].setSize(new Dimension(50, WINDOW_HEIGHT-100));
-		spacer[right].setSize(new Dimension(50, WINDOW_HEIGHT-100));
-		
-		//Add spacers
-		add(spacer[top], BorderLayout.NORTH);
-		add(spacer[bottom], BorderLayout.SOUTH);
-		add(spacer[left], BorderLayout.WEST);
-		add(spacer[right], BorderLayout.EAST);
+		super("New Roster - ON A ROLL", 500, 400, 50);
 		
 		//Panel to hold everything
 		JPanel panel = new JPanel();
@@ -84,13 +62,8 @@ public class NewRosterFrame extends JFrame implements ActionListener {
 		wrapper.add(next);
 		panel.add(wrapper);
 		
-		//Add panel to the center
-		add(panel, BorderLayout.CENTER);
-		
-		//Clean up and show
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		pack();
-		setVisible(true);
+		add(panel);
+		cleanUp();
 		
 	}
 

@@ -4,12 +4,9 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class WelcomeFrame extends JFrame implements ActionListener {
+public class WelcomeFrame extends BasicFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
-	
-	private static final int WINDOW_WIDTH = 300;
-	private static final int WINDOW_HEIGHT = 300;
 	
 	private final JTextField locText;
 	private final JButton browseButton;
@@ -19,35 +16,12 @@ public class WelcomeFrame extends JFrame implements ActionListener {
 	public WelcomeFrame() {
 		
 		//Format JFrame
-		super("ON A ROLL");
+		super("ON A ROLL", 300, 300, 50);
 		setLookAndFeel();
-		setSize(new Dimension(600, 150));
-		setLayout(new BorderLayout());
-		
-		//Create spacers
-		JPanel[] spacer = new JPanel[4];
-		int top = 0;
-		int right = 1;
-		int bottom = 2;
-		int left = 3;
-		for(int i = 0; i < spacer.length; i++) spacer[i] = new JPanel();
-		spacer[top].setSize(new Dimension(WINDOW_WIDTH, 50));
-		spacer[bottom].setSize(new Dimension(WINDOW_WIDTH, 50));
-		spacer[right].setSize(new Dimension(50, WINDOW_HEIGHT-100));
-		spacer[right].setSize(new Dimension(50, WINDOW_HEIGHT-100));
-		
-		//Add spacers
-		add(spacer[top], BorderLayout.NORTH);
-		add(spacer[bottom], BorderLayout.SOUTH);
-		add(spacer[left], BorderLayout.WEST);
-		add(spacer[right], BorderLayout.EAST);
 		
 		//Make a JPanel to add everything to and format it
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(3,1));
-		
-		//A general wrapper for each part
-		JPanel wrapper;
 		
 		//Make the welcome greeting
 		wrapper = new JPanel();
@@ -84,22 +58,10 @@ public class WelcomeFrame extends JFrame implements ActionListener {
 		panel.add(wrapper);
 		
 		//Add panel to the frame
-		add(panel, BorderLayout.CENTER);
+		add(panel);
 		
-		//Set the program to exit on close
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		cleanUp();
 		
-		//Make visible
-		setVisible(true);
-		
-	}
-	
-	private static void setLookAndFeel() {
-		try {
-			UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
-		} catch(Exception e) {
-			//and ignore
-		}
 	}
 
 	public void actionPerformed(ActionEvent event) {
@@ -115,6 +77,14 @@ public class WelcomeFrame extends JFrame implements ActionListener {
 			new NewRosterFrame();
 		}
 		
+	}
+	
+	private void setLookAndFeel() {
+		try {
+			UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
+		} catch(Exception e) {
+			//and ignore
+		}
 	}
 	
 }
