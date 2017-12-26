@@ -12,17 +12,18 @@ public class CUIManager implements UserInterface {
 	}
 	
 	public UserInterface run() {
-		boolean loaded = false;
-		while(!loaded) {
+		while(!Controller.rosterIsLoaded()) {
 			try {
 				String loc = welcomeSequence();
 				Controller.loadRoster(loc);
-				loaded = true;
 			} catch(IOException ioe) {
 				ConsoleUtility.println("Invalid path or file name");
 				ConsoleUtility.printLines(1);
 			}
 		}
+		
+		mainSequence();
+		
 		return this;
 	}
 	
@@ -35,23 +36,15 @@ public class CUIManager implements UserInterface {
 		ConsoleUtility.println("2. New Roster");
 		ConsoleUtility.println("3. Exit");
 		
-		int option = 0;
-		do {
-			option = ConsoleUtility.promptInt("Option [#] >> ");
-			ConsoleUtility.printLines(1);
-			
-			switch(option) {
-			case 1:
-				return loadRosterSequence();
-			case 2:
-				return newRosterSequence();
-			case 3:
-				System.exit(0);
-			default:
-				ConsoleUtility.println("Please input 1, 2, or 3");
-				ConsoleUtility.printLines(1);
-			}
-		} while(option < 1 || option > 3);
+		int option = ConsoleUtility.promptOption(3);
+		switch(option) {
+		case 1:
+			return loadRosterSequence();
+		case 2:
+			return newRosterSequence();
+		case 3:
+			System.exit(0);
+		}
 		
 		return "";
 		
@@ -76,6 +69,10 @@ public class CUIManager implements UserInterface {
 		
 		if(!dir.endsWith(File.separator)) dir += File.separator;
 		return dir + name;
+		
+	}
+	
+	private void mainSequence() {
 		
 	}
 

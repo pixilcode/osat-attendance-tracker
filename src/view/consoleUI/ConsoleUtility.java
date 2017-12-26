@@ -62,4 +62,17 @@ final class ConsoleUtility {
 		}
 	}
 	
+	static int promptOption(int numOfOptions) {
+		
+		int option = promptInt("Option [#] >> ");
+		while(option < 1 || option > numOfOptions) {
+			option = ConsoleUtility.promptInt("Option [#] >> ");
+			ConsoleUtility.printLines(1);
+			out.println("Please input a value between 1 and" + numOfOptions);
+			out.println();
+		}
+		return option;
+		
+	}
+	
 }
