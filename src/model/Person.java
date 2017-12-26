@@ -38,20 +38,14 @@ public class Person {
 	private ArrayList<Task> tasks;
 	
 	/**
-	 * A temporary ID for management
-	 */
-	final private int TEMP_ID;
-	
-	/**
 	 * @param name the name of the person
 	 * @param tempID the temporary ID of the person
 	 */
-	public Person(String name, int tempID) {
+	public Person(String name) {
 		this.name = name;
 		this.info = new HashMap<String, String>();
 		this.attendance = new ArrayList<GregorianCalendar>();
 		this.tasks = new ArrayList<Task>();
-		this.TEMP_ID = tempID;
 	}
 	
 	/**
@@ -59,12 +53,11 @@ public class Person {
 	 * @param info a collection of info about the person
 	 * @param tempID the temporary ID of the person
 	 */
-	public Person(String name, HashMap<String, String> info, int tempID) {
+	public Person(String name, HashMap<String, String> info) {
 		this.name = name;
 		this.info = info;
 		this.attendance = new ArrayList<GregorianCalendar>();
 		this.tasks = new ArrayList<Task>();
-		this.TEMP_ID = tempID;
 	}
 	
 	/**
@@ -74,12 +67,11 @@ public class Person {
 	 * @param tasks
 	 * @param tempID
 	 */
-	public Person(String name, HashMap<String, String> info, ArrayList<GregorianCalendar> attendance, ArrayList<Task> tasks, int tempID) {
+	public Person(String name, HashMap<String, String> info, ArrayList<GregorianCalendar> attendance, ArrayList<Task> tasks) {
 		this.name = name;
 		this.info = info;
 		this.attendance = attendance;
 		this.tasks = tasks;
-		this.TEMP_ID = tempID;
 	}
 	
 	public String getName() {
@@ -100,10 +92,6 @@ public class Person {
 	
 	public ArrayList<Task> getTasks() {
 		return tasks;
-	}
-	
-	public int getTempID() {
-		return TEMP_ID;
 	}
 	
 	public void addInfo(String attribute, String value) {
