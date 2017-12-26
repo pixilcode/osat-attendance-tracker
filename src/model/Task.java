@@ -15,12 +15,7 @@ public class Task {
 	 */
 	private GregorianCalendar due;
 	
-	/**
-	 * A temporary ID for management
-	 */
-	private final int TEMP_ID;
-	
-	public Task(String title, String description, int yearDue, int monthDue, int dayDue, int tempID) {
+	public Task(String title, String description, int yearDue, int monthDue, int dayDue) {
 		
 		//Set title and description of task
 		this.title = title;
@@ -29,12 +24,9 @@ public class Task {
 		//Set the day that the task is due (month is 0-based)
 		this.due = new GregorianCalendar(yearDue, --monthDue, dayDue);
 		
-		//Set the temporary ID
-		this.TEMP_ID = tempID;
-		
 	}
 	
-	public Task(String title, String description, GregorianCalendar due, int tempID) {
+	public Task(String title, String description, GregorianCalendar due) {
 		
 		//Set title and description of task
 		this.title = title;
@@ -42,9 +34,6 @@ public class Task {
 		
 		//Set the due date
 		this.due = due;
-		
-		//Set the temporary ID
-		this.TEMP_ID = tempID;
 		
 	}
 	
@@ -70,10 +59,6 @@ public class Task {
 
 	public void setDue(GregorianCalendar due) {
 		this.due = due;
-	}
-
-	public int getTempID() {
-		return TEMP_ID;
 	}
 	
 	/**

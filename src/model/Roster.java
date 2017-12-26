@@ -2,11 +2,7 @@ package model;
 
 import java.io.*;
 import java.nio.file.*;
-import java.util.ArrayList;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 import controller.Controller;
 import nu.xom.*;
@@ -32,8 +28,6 @@ public class Roster implements Iterable<Person> {
 	 * Initialize an empty roster
 	 */
 	public Roster() {
-		Controller.resetPersonID();
-		Controller.resetTaskID();
 		
 		this.members = new ArrayList<Person>();
 		
@@ -47,10 +41,6 @@ public class Roster implements Iterable<Person> {
 	 */
 	//Throw IOException so that GUI can alert person of error
 	public Roster(String location) throws IOException {
-		
-		//Reset Controller variables
-		Controller.resetPersonID();
-		Controller.resetTaskID();
 		
 		//Create a new array for members
 		this.members = new ArrayList<Person>();
@@ -160,12 +150,12 @@ public class Roster implements Iterable<Person> {
 					GregorianCalendar due = new GregorianCalendar(year, month, day);
 					
 					//Create new Task and add to array
-					tasks.add(new Task(title, description, due, Controller.getTaskID()));
+					tasks.add(new Task(title, description, due));
 					
 				}
 				
 				//Create Person object and add to array
-				members.add(new Person(name, info, attendance, tasks, Controller.getPersonID()));
+				members.add(new Person(name, info, attendance, tasks));
 				
 			}
 			
@@ -230,11 +220,11 @@ public class Roster implements Iterable<Person> {
 	}
 	
 	public void addPerson(String name) {
-		members.add(new Person(name, Controller.getPersonID()));
+		members.add(new Person(name));
 	}
 	
 	public void addPerson(String name, HashMap<String, String> info) {
-		members.add(new Person(name, info, Controller.getPersonID()));
+		members.add(new Person(name, info));
 	}
 	
 	public Path getLocation() {
