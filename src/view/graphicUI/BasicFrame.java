@@ -46,10 +46,11 @@ public abstract class BasicFrame extends JFrame {
 	}
 	
 	/**
-	 * add the center panel, pack, and set to visible
+	 * pack, make unresizable and set to visible
 	 */
 	protected void cleanUp() {
 		pack();
+		setResizable(false);
 		setVisible(true);
 	}
 	

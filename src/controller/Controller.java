@@ -1,43 +1,36 @@
 package controller;
 
+import java.io.IOException;
 import java.nio.file.Path;
 import model.*;
-import view.*;
-import view.graphicUI.WelcomeFrame;
+import view.consoleUI.*;
+import view.graphicUI.*;
 
 public class Controller {
 	
-	private static int nextPersonID = 0;
-	private static int nextTaskID = 0;
-	private static UserInterface ui;
+	private static Roster roster;
+	private static boolean loaded;
 	
 	public static void run() {
 		
 	}
 	
 	public static void test() {
-		new WelcomeFrame();
-	}
-
-	public static void resetPersonID() {
-		nextPersonID = 0;
-	}
-	
-	public static void resetTaskID() {
-		nextTaskID = 0;
-	}
-	
-	public static int getPersonID() {
-		return nextPersonID++;
-	}
-	
-	public static int getTaskID() {
-		return nextTaskID++;
+		(new CUIManager()).run();
 	}
 
 	public static Path getLocation() {
 		// TODO Get location through GUI
 		return null;
+	}
+
+	public static void loadRoster(String loc) throws IOException {
+		roster = new Roster(loc);
+		loaded = true;
+	}
+	
+	public static boolean rosterIsLoaded() {
+		return loaded;
 	}
 
 }
