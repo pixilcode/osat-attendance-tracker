@@ -10,15 +10,10 @@ public abstract class BasicFrame extends JFrame {
 	protected final int windowHeight;
 	protected final int windowWidth;
 	
-	/**
-	 * a general wrapper for grouping items
-	 */
-	protected JPanel wrapper;
-	
 	public BasicFrame(String frameName, int windowHeight, int windowWidth, int paddingSize) {
 		
 		// Name the frame and assign the variables
-		super(frameName);
+		super(frameName + " - ON A ROLL");
 		this.windowHeight = windowHeight;
 		this.windowWidth = windowWidth;
 		
@@ -50,18 +45,30 @@ public abstract class BasicFrame extends JFrame {
 		
 	}
 	
-	@Override
-	public Component add(Component component) {
-		super.add(component, BorderLayout.CENTER);
-		return component;
-	}
-	
 	/**
 	 * add the center panel, pack, and set to visible
 	 */
 	protected void cleanUp() {
 		pack();
 		setVisible(true);
+	}
+	
+	protected JPanel wrap(Component[] components, LayoutManager layout) {
+		JPanel wrapper = new JPanel();
+		wrapper.setLayout(layout);
+		for(Component component : components)
+			wrapper.add(component);
+		return wrapper;
+	}
+	
+	protected JPanel wrap(Component component, LayoutManager layout) {
+		return wrap(new Component[] {component}, layout);
+	}
+	
+	@Override
+	public Component add(Component component) {
+		super.add(component, BorderLayout.CENTER);
+		return component;
 	}
 
 }

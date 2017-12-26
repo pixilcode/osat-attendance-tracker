@@ -16,51 +16,35 @@ public class NewRosterFrame extends BasicFrame implements ActionListener {
 	public NewRosterFrame() {
 		
 		//Setup the frame
-		super("New Roster - ON A ROLL", 500, 400, 50);
+		super("New Roster", 500, 400, 50);
 		
 		//Panel to hold everything
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		
-		//A wrapper panel
-		JPanel wrapper;
-		
 		//Add instructions
-		wrapper = new JPanel();
-		wrapper.setLayout(new FlowLayout(FlowLayout.LEFT));
 		JLabel instructions = new JLabel("Pick location and roster name");
 		instructions.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 20));
-		wrapper.add(instructions);
-		panel.add(wrapper);
+		panel.add(wrap(instructions, new FlowLayout(FlowLayout.LEFT)));
 		
 		//Add a way to pick a location
-		wrapper = new JPanel();
-		wrapper.setLayout(new FlowLayout(FlowLayout.LEFT));
 		dir = new JFileChooser();
 		dir.setControlButtonsAreShown(false);
 		dir.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-		panel.add(dir);
+		panel.add(wrap(dir, new FlowLayout(FlowLayout.LEFT)));
 		
 		//Add a place for the name of the file
-		wrapper = new JPanel();
-		wrapper.setLayout(new FlowLayout(FlowLayout.LEFT));
 		JLabel label = new JLabel("File name: ");
 		name = new JTextField(20);
 		name.setText("roster1.xml");
-		wrapper.add(label);
-		wrapper.add(name);
-		panel.add(wrapper);
+		panel.add(wrap(new Component[] {label, name}, new FlowLayout(FlowLayout.CENTER)));
 		
 		//Add buttons to continue/cancel
-		wrapper = new JPanel();
-		wrapper.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		cancel = new JButton("Cancel");
 		cancel.addActionListener(this);
 		next = new JButton("Next");
 		next.addActionListener(this);
-		wrapper.add(cancel);
-		wrapper.add(next);
-		panel.add(wrapper);
+		panel.add(wrap(new Component[] {cancel, next}, new FlowLayout(FlowLayout.RIGHT)));
 		
 		add(panel);
 		cleanUp();
