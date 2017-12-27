@@ -20,40 +20,23 @@ public class Roster implements Iterable<Person> {
 	private ArrayList<Person> members;
 	
 	/**
-	 * Whether or not the roster exists
-	 */
-	boolean exists;
-	
-	/**
-	 * Initialize an empty roster
-	 */
-	public Roster() {
-		
-		this.members = new ArrayList<Person>();
-		
-		this.location = null;
-		this.exists = false;
-	}
-	
-	/**
 	 * @param location the location of the roster
 	 * @throws IOException the XML file is unreadable
 	 */
-	//Throw IOException so that GUI can alert person of error
-	public Roster(String location) throws IOException {
+	//Throw IOException so that UI can alert person of error
+	public Roster(String locationString) throws IOException {
 		
 		//Create a new array for members
-		this.members = new ArrayList<Person>();
+		members = new ArrayList<Person>();
 		
-		this.location = Paths.get(location);
+		location = Paths.get(locationString);
 		
 		//If the location exists
-		if(this.location.toFile().exists()) {
-			readXMLfile(this.location);
-			exists = true;
+		if(location.toFile().exists()) {
+			readXMLfile(location);
 		}
 		else {
-			exists = false;
+			writeXMLfile();
 		}
 		
 		
@@ -63,7 +46,7 @@ public class Roster implements Iterable<Person> {
 	 * @param location the location of the XML file 
 	 * @throws IOException the XML file is unreadable
 	 */
-	//Throw IOException so that GUI can alert person of error
+	//Throw IOException so that UI can alert person of error
 	private void readXMLfile(Path location) throws IOException {
 			
 		try {
@@ -171,10 +154,8 @@ public class Roster implements Iterable<Person> {
 	 * Compile the XML document and write it
 	 * @throws IOException error when creating file
 	 */
-	//Throws IOException so that GUI can alert person of error
+	//Throws IOException so that UI can alert person of error
 	public void writeXMLfile() throws IOException {
-		
-		if(location.equals(null)) location = Controller.getLocation();
 		
 		try {
 			//If the file does not exist, make it
@@ -245,10 +226,10 @@ public class Roster implements Iterable<Person> {
 		private final ArrayList<Person> members;
 		private int cursor;
 		
-		RosterIterator(ArrayList<Person> members) {
+		RosterIterator(ArrayList<Person> memberList) {
 			
 			cursor = 0;
-			this.members = members;
+			members = memberList;
 			
 		}
 
