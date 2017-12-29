@@ -1,13 +1,18 @@
 package view.consoleUI;
 
 import java.io.PrintStream;
+import java.util.Arrays;
 import java.util.Scanner;
 
-final class ConsoleUtility {
+final class Console {
 	
 	private static final Scanner in = new Scanner(System.in);
 	private static final PrintStream out = System.out;
 	private static StringBuilder string;
+	
+	public static final int YEAR = 0;
+	public static final int MONTH = 1;
+	public static final int DAY = 2;
 	
 	static void printLines(int number) {
 		
@@ -30,6 +35,7 @@ final class ConsoleUtility {
 		string.append(string.substring(0, title.length()));
 		string.append('\n');
 		
+		out.print('\n');
 		out.print(string);
 		
 	}
@@ -66,12 +72,40 @@ final class ConsoleUtility {
 		
 		int option = promptInt("Option [#] >> ");
 		while(option < 1 || option > numOfOptions) {
-			option = ConsoleUtility.promptInt("Option [#] >> ");
-			ConsoleUtility.printLines(1);
-			out.println("Please input a value between 1 and" + numOfOptions);
+			option = Console.promptInt("Option [#] >> ");
+			Console.printLines(1);
+			out.println("Please input a value between 1 and " + numOfOptions);
 			out.println();
 		}
 		return option;
+		
+	}
+	
+	public static int[] promptDate() {
+		
+		int[] date = new int[3];
+		date[YEAR] = promptInt("Year [YYYY] >> ");
+		date[MONTH] = promptInt("Month [MM] >> ");
+		date[DAY] = promptInt("Day [DD] >> ");
+		
+		return date;
+		
+	}
+	
+	public static String promptMarking(String prompt, String[] availableMarkings) {
+		
+		while(true) {
+			String marking = promptString(prompt);
+			if(markingIsIn(availableMarkings, marking)) return marking;
+		}
+		
+	}
+
+	private static boolean markingIsIn(String[] availableMarkings, String givenMarking) {
+		
+		for(String marking : availableMarkings)
+			if(marking.equals(givenMarking)) return true;
+		return false;
 		
 	}
 	
