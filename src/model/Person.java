@@ -125,7 +125,7 @@ public class Person {
 	public void removeTask(Task task) {
 		tasks.remove(task);
 	}
-	
+
 	/**
 	 * Convert the person to an XML element
 	 * @return the person as an XML element

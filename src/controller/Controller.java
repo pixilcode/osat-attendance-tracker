@@ -16,6 +16,7 @@ public class Controller {
 	public static final int PRESENT = 0;
 	public static final int ABSENT = 1;
 	public static final String[] MARKS = {"p", "a"};
+	
 	private static Roster roster;
 	private static boolean loaded;
 	
@@ -24,7 +25,8 @@ public class Controller {
 	}
 	
 	public static void test() {
-		(new CUIManager()).run();
+//		(new CUIManager()).run();
+		System.out.println(TestWrapper.run());
 	}
 
 	public static Path getLocation() {
@@ -89,7 +91,7 @@ public class Controller {
 	}
 	
 	public static void removeMember(String name) {
-		roster.removePerson(name);
+		roster.removePerson(new Name(name));
 	}
 
 }

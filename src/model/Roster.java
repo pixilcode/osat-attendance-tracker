@@ -4,7 +4,6 @@ import java.io.*;
 import java.nio.file.*;
 import java.util.*;
 
-import controller.Controller;
 import nu.xom.*;
 
 public class Roster implements Iterable<Person> {
@@ -206,6 +205,16 @@ public class Roster implements Iterable<Person> {
 	
 	public void addPerson(String name, HashMap<String, String> info) {
 		members.add(new Person(name, info));
+	}
+	
+	@SuppressWarnings("unlikely-arg-type")
+	public void removePerson(Name name) {
+		members.remove(members.indexOf(name));
+	}
+	
+	@SuppressWarnings("unlikely-arg-type")
+	public boolean contains(Name name) {
+		return members.contains(name);
 	}
 	
 	public Path getLocation() {
