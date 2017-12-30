@@ -8,10 +8,10 @@ public class Index {
 	public static void main(String[] args) {
 		
 		//To test
-		Controller.test();
+//		Controller.test();
 		
 		//To run
-//		Controller.run();
+		Controller.run();
 
 	}
 

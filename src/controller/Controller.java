@@ -2,14 +2,12 @@ package controller;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.Arrays;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.LinkedList;
 
 import model.*;
 import view.consoleUI.*;
-import view.graphicUI.*;
 
 public class Controller {
 	
@@ -21,12 +19,11 @@ public class Controller {
 	private static boolean loaded;
 	
 	public static void run() {
-		
+		(new CUIManager()).run();
 	}
 	
 	public static void test() {
-//		(new CUIManager()).run();
-		System.out.println(TestWrapper.run());
+		TestRosterToTable.run();
 	}
 
 	public static Path getLocation() {
@@ -35,7 +32,12 @@ public class Controller {
 	}
 
 	public static void loadRoster(String loc) throws IOException {
-		roster = new Roster(loc);
+		roster = new Roster(loc, Roster.Init.LOAD);
+		loaded = true;
+	}
+	
+	public static void newRoster(String loc) throws IOException {
+		roster = new Roster(loc, Roster.Init.NEW);
 		loaded = true;
 	}
 	
@@ -51,8 +53,8 @@ public class Controller {
 		roster.writeXMLfile();
 	}
 
-	public static String rosterToString() {
-		return roster.toString();
+	public static String rosterTable() {
+		return roster.toTable();
 	}
 
 	public static LinkedList<String> getNames() {
@@ -71,11 +73,12 @@ public class Controller {
 			markAttendance(name, attendance.get(name), day);
 		
 	}
-
+	
+	@SuppressWarnings("unlikely-arg-type")
 	public static boolean markAttendance(String name, String marking, GregorianCalendar day) {
 		
 		try {
-			Person person = roster.getMembers().get(roster.getMembers().indexOf(name));
+			Person person = roster.getMembers().get(roster.getMembers().indexOf(new Name(name)));
 			if(marking.equals(MARKS[PRESENT])) {
 				person.addAttendedDay(day);
 			}
@@ -85,6 +88,10 @@ public class Controller {
 		}
 		
 	}
+	
+	public static boolean rosterContainsMember(String name) {
+		return roster.contains(new Name(name));
+	}
 
 	public static void addMember(String name) {
 		roster.addPerson(name);
@@ -92,6 +99,10 @@ public class Controller {
 	
 	public static void removeMember(String name) {
 		roster.removePerson(new Name(name));
+	}
+
+	public static boolean rosterIsEmpty() {
+		return roster.getMembers().isEmpty();
 	}
 
 }

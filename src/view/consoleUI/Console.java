@@ -1,7 +1,6 @@
 package view.consoleUI;
 
 import java.io.PrintStream;
-import java.util.Arrays;
 import java.util.Scanner;
 
 final class Console {

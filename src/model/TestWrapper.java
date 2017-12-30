@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class TestWrapper {
 	
+	@SuppressWarnings("unlikely-arg-type")
 	public static boolean run() {
 		
 		ArrayList<Person> array = new ArrayList<Person>();

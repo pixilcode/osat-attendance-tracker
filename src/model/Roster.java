@@ -20,24 +20,37 @@ public class Roster implements Iterable<Person> {
 	
 	/**
 	 * @param location the location of the roster
+	 * @param type the type of roster initialization
 	 * @throws IOException the XML file is unreadable
 	 */
 	//Throw IOException so that UI can alert person of error
-	public Roster(String locationString) throws IOException {
+	public Roster(String locationString, Init type) throws IOException {
 		
 		//Create a new array for members
 		members = new ArrayList<Person>();
 		
 		location = Paths.get(locationString);
 		
-		//If the location exists
-		if(location.toFile().exists()) {
-			readXMLfile(location);
+		//Check the type of initialization and respond accordingly
+		switch(type) {
+		case LOAD:
+			if(location.toFile().exists()) {
+				readXMLfile(location);
+			}
+			else {
+				throw new IOException("File doesn't exist");
+			}
+			break;
+		case NEW:
+			//If the location exists
+			if(location.toFile().exists()) {
+				throw new IOException("File already exists");
+			}
+			else {
+				writeXMLfile();
+			}
+			break;
 		}
-		else {
-			writeXMLfile();
-		}
-		
 		
 	}
 	
@@ -58,7 +71,6 @@ public class Roster implements Iterable<Person> {
 			
 			//Get each person element
 			Elements membersElements = roster.getChildElements();
-			ArrayList<Person> members = new ArrayList<Person>();
 			
 			//For each person, create a new person element
 			for(int i = 0; i < membersElements.size(); i++) {
@@ -263,6 +275,86 @@ public class Roster implements Iterable<Person> {
 		
 		
 		
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Roster [members=");
+		builder.append(members);
+		builder.append("]");
+		return builder.toString();
+	}
+	
+	/**
+	 * @return a string containing the roster in table form
+	 */
+	public String toTable() {
+		
+		StringBuilder builder = new StringBuilder();
+		int[] columnLength = new int[2];
+		
+		// Find the greatest length
+		for(Person member : members) {
+			
+			if(member.getName().length() > columnLength[0])
+				columnLength[0] = member.getName().length();
+			if(member.getAttendance().size() > columnLength[1])
+				columnLength[1] = Integer.toString(member.getAttendance().size()).length();
+			
+		}
+		
+		if(columnLength[0] < "Name".length()) columnLength[0] = "Name".length();
+		if(columnLength[1] < "Days Present".length()) columnLength[1] = "Days Present".length();
+		
+		// Create the divider between cells
+		// as well as something to draw spaces from
+		StringBuilder divider = new StringBuilder();
+		StringBuilder spaces = new StringBuilder();
+		for(int i = 0; i < columnLength[0] + columnLength[1] + 3; i++) {
+			divider.append('-');
+			spaces.append(' ');
+		}
+		
+		// Build the title => |   Names   | Days Present |
+		builder.append(divider).append('\n');
+		builder.append(
+				'|').append(
+				"Name").append(
+				spaces.substring("Name".length(), columnLength[0])).append(
+				'|').append(
+				"Days Present").append(
+				spaces.substring("Days Present".length(), columnLength[1])).append(
+				'|').append(
+				'\n');
+		
+		for(Person member : members) {
+			
+			builder.append(divider).append('\n');
+			
+			String name = member.getName();
+			int nameLength = name.length();
+			int daysPresent = member.getAttendance().size();
+			int daysPresentLength = Integer.toString(daysPresent).length();
+			
+			builder.append(
+					'|').append(
+					name).append(
+					spaces.substring(nameLength, columnLength[0])).append(
+					'|').append(
+					daysPresent).append(
+					spaces.substring(daysPresentLength, columnLength[1])).append(
+					'|').append(
+					'\n');
+		}
+		
+		builder.append(divider).append('\n');
+		
+		return builder.toString();
+	}
+	
+	public enum Init {
+		LOAD, NEW;
 	}
 	
 }

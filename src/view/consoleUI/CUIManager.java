@@ -16,8 +16,7 @@ public class CUIManager implements UserInterface {
 		
 		while(!Controller.rosterIsLoaded()) {
 			try {
-				String loc = welcomeSequence();
-				Controller.loadRoster(loc);
+				welcomeSequence();
 			} catch(IOException ioe) {
 				Console.println("Invalid path or file name");
 			}
@@ -29,7 +28,7 @@ public class CUIManager implements UserInterface {
 		
 	}
 	
-	private String welcomeSequence() {
+	private void welcomeSequence() throws IOException {
 		
 		Console.printTitle("Welcome");
 		Console.println("Load a roster or make a new one");
@@ -40,33 +39,36 @@ public class CUIManager implements UserInterface {
 		int option = Console.promptOption(3);
 		switch(option) {
 		case 1:
-			return loadRosterSequence();
+			loadRosterSequence();
+			break;
 		case 2:
-			return newRosterSequence();
+			newRosterSequence();
+			break;
 		case 3:
 			System.exit(0);
 		}
 		
-		return "";
+		mainSequence();
 		
 	}
 
-	private String loadRosterSequence() {
+	private void loadRosterSequence() throws IOException {
 		
 		Console.printTitle("Load Roster");
 		Console.printLines(1);
-		Console.println("Warning: Not using the full path may cause problems");
+		Console.println("Warning: Not entering the full path may cause problems");
 		Console.printLines(1);
 		
-		return Console.promptString("Roster Path >> ");
+		String loc = Console.promptString("Roster Path >> ");
+		Controller.loadRoster(loc);
 		
 	}
 	
-	private String newRosterSequence() {
+	private void newRosterSequence() throws IOException {
 		
 		Console.printTitle("New Roster");
 		Console.printLines(1);
-		Console.println("Warning: Inputting a relative path may cause problems");
+		Console.println("Warning: Not entering the full path may cause problems");
 		Console.printLines(1);
 		
 		String dir = Console.promptString("Roster Directory >> ");
@@ -74,7 +76,9 @@ public class CUIManager implements UserInterface {
 		
 		if(!dir.endsWith(File.separator)) dir += File.separator;
 		if(!name.endsWith(".xml")) name += ".xml";
-		return dir + name;
+		String loc = dir + name;
+		
+		Controller.newRoster(loc);
 		
 	}
 	
@@ -126,10 +130,13 @@ public class CUIManager implements UserInterface {
 		switch(option) {
 		case 1:
 			addMemberSequence();
+			break;
 		case 2:
 			removeMemberSequence();
+			break;
 		case 3:
 			mainSequence();
+			break;
 		case 4:
 			System.exit(0);
 		}
@@ -145,6 +152,8 @@ public class CUIManager implements UserInterface {
 		
 		Controller.addMember(name);
 		
+		mainSequence();
+		
 	}
 	
 	private void removeMemberSequence() {
@@ -154,7 +163,12 @@ public class CUIManager implements UserInterface {
 		
 		String name = Console.promptString("Name >> ");
 		
-		Controller.removeMember(name);
+		if(Controller.rosterContainsMember(name))
+			Controller.removeMember(name);
+		else
+			Console.println("\nMember does not exist");
+		
+		mainSequence();
 		
 	}
 
@@ -183,8 +197,10 @@ public class CUIManager implements UserInterface {
 			break;
 		case 4:
 			markOnePreviousDaySequence();
+			break;
 		case 5:
 			mainSequence();
+			break;
 		case 6:
 			System.exit(0);
 		}
@@ -201,7 +217,7 @@ public class CUIManager implements UserInterface {
 		LinkedList<String> names = Controller.getNames();
 		HashMap<String, String> attendance = new HashMap<String, String>();
 		
-		if(names.size() == 0)
+		if(Controller.rosterIsEmpty())
 			Console.println("There are no members on the roster\n"
 					+ "Choose 'Manage Roster' to add members");
 		
@@ -249,7 +265,7 @@ public class CUIManager implements UserInterface {
 		Console.println("Input 'p' to mark present");
 		Console.printLines(1);
 		
-		if(names.size() == 0)
+		if(Controller.rosterIsEmpty())
 			Console.println("There are no members on the roster\n"
 					+ "Choose 'Manage Roster' to add members");
 		
@@ -287,7 +303,12 @@ public class CUIManager implements UserInterface {
 
 	private void printRosterSequence() {
 		Console.printTitle("Roster");
-		Console.println(Controller.rosterToString());
+		
+		if(Controller.rosterIsEmpty())
+			Console.println("There are no members on the roster\n"
+					+ "Choose 'Manage Roster' to add members");
+		else
+			Console.println(Controller.rosterTable());
 		
 		mainSequence();
 	}
