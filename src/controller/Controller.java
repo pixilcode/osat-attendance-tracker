@@ -1,10 +1,7 @@
 package controller;
 
 import java.io.IOException;
-import java.nio.file.Path;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.LinkedList;
+import java.util.*;
 
 import model.*;
 import view.consoleUI.*;
@@ -15,49 +12,41 @@ public class Controller {
 	public static final int ABSENT = 1;
 	public static final String[] MARKS = {"p", "a"};
 	
-	private static Roster roster;
-	private static boolean loaded;
+	private Roster roster;
+	private boolean loaded;
+	private boolean usingGUI;
 	
-	public static void run() {
+	public void run() {
 		(new CUIManager()).run();
 	}
-	
-	public static void test() {
-		TestRosterToTable.run();
-	}
 
-	public static Path getLocation() {
-		// TODO Get location through GUI
-		return null;
-	}
-
-	public static void loadRoster(String loc) throws IOException {
+	public void loadRoster(String loc) throws IOException {
 		roster = new Roster(loc, Roster.Init.LOAD);
 		loaded = true;
 	}
 	
-	public static void newRoster(String loc) throws IOException {
+	public void newRoster(String loc) throws IOException {
 		roster = new Roster(loc, Roster.Init.NEW);
 		loaded = true;
 	}
 	
-	public static boolean rosterIsLoaded() {
+	public boolean rosterIsLoaded() {
 		return loaded;
 	}
 
-	public static String rosterLocation() {
+	public String rosterLocation() {
 		return roster.getLocation().toString();
 	}
 
-	public static void saveRoster() throws IOException {
+	public void saveRoster() throws IOException {
 		roster.writeXMLfile();
 	}
 
-	public static String rosterTable() {
+	public String rosterTable() {
 		return roster.toTable();
 	}
 
-	public static LinkedList<String> getNames() {
+	public LinkedList<String> getNames() {
 		
 		LinkedList<String> names = new LinkedList<String>();
 		for(Person member : roster) {
@@ -67,7 +56,7 @@ public class Controller {
 	}
 
 	
-	public static void markAttendance(HashMap<String, String> attendance, GregorianCalendar day) {
+	public void markAttendance(HashMap<String, String> attendance, GregorianCalendar day) {
 		
 		for(String name : attendance.keySet())
 			markAttendance(name, attendance.get(name), day);
@@ -75,7 +64,7 @@ public class Controller {
 	}
 	
 	@SuppressWarnings("unlikely-arg-type")
-	public static boolean markAttendance(String name, String marking, GregorianCalendar day) {
+	public boolean markAttendance(String name, String marking, GregorianCalendar day) {
 		
 		try {
 			Person person = roster.getMembers().get(roster.getMembers().indexOf(new Name(name)));
@@ -89,20 +78,46 @@ public class Controller {
 		
 	}
 	
-	public static boolean rosterContainsMember(String name) {
+	public boolean rosterContainsMember(String name) {
 		return roster.contains(new Name(name));
 	}
 
-	public static void addMember(String name) {
+	public void addMember(String name) {
 		roster.addPerson(name);
 	}
 	
-	public static void removeMember(String name) {
+	public void removeMember(String name) {
 		roster.removePerson(new Name(name));
 	}
 
-	public static boolean rosterIsEmpty() {
+	public boolean rosterIsEmpty() {
 		return roster.getMembers().isEmpty();
+	}
+
+	public void parseArgs(String[] args) {
+		
+		usingGUI = true;
+		
+		if(args.length > 0) {
+			if(args[0] == "--no-gui")
+				usingGUI = false;
+			else {
+				try {
+				roster = new Roster(args[0], Roster.Init.LOAD);
+				} catch(IOException ioe) {
+					printHelp();
+					System.exit(0);
+				}
+			}
+		}
+	}
+	
+	public boolean isUsingGUI() {
+		return usingGUI;
+	}
+
+	private static void printHelp() {
+		System.out.println("HALP!");
 	}
 
 }

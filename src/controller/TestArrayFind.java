@@ -12,7 +12,7 @@ import java.util.ArrayList;
  *
  */
 
-public class TestArrayFind {
+public final class TestArrayFind {
 	
 	@SuppressWarnings("unlikely-arg-type")
 	public void run() {
