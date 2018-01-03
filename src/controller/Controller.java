@@ -98,7 +98,7 @@ public class Controller {
 	 * @param args the arguments to parse
 	 * @return whether the argument parsing succeeded or not
 	 */
-	public boolean parseArgs(String[] args) throws IOException {
+	public boolean parseArgs(String[] args) {
 		
 		usingGUI = true;
 		Roster.Init init = Roster.Init.LOAD;
@@ -109,7 +109,11 @@ public class Controller {
 			else if(args[i] == "--new"){
 				init = Roster.Init.NEW;
 			} else {
-				roster = new Roster(args[i], init);
+				try {
+					roster = new Roster(args[i], init);
+				} catch (IOException e) {
+					return false;
+				}
 			}
 		}
 		
