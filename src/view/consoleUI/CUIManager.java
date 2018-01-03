@@ -8,13 +8,17 @@ import view.UserInterface;
 
 public class CUIManager implements UserInterface {
 	
-	public CUIManager() {
+	Controller controller;
+	
+	public CUIManager(Controller c) {
+		
+		controller = c;
 		
 	}
 	
 	public UserInterface run() {
 		
-		while(!Controller.rosterIsLoaded()) {
+		while(!controller.rosterIsLoaded()) {
 			try {
 				welcomeSequence();
 			} catch(IOException ioe) {
@@ -60,7 +64,7 @@ public class CUIManager implements UserInterface {
 		Console.printLines(1);
 		
 		String loc = Console.promptString("Roster Path >> ");
-		Controller.loadRoster(loc);
+		controller.loadRoster(loc);
 		
 	}
 	
@@ -78,7 +82,7 @@ public class CUIManager implements UserInterface {
 		if(!name.endsWith(".xml")) name += ".xml";
 		String loc = dir + name;
 		
-		Controller.newRoster(loc);
+		controller.newRoster(loc);
 		
 	}
 	
@@ -150,7 +154,7 @@ public class CUIManager implements UserInterface {
 		
 		String name = Console.promptString("Name >> ");
 		
-		Controller.addMember(name);
+		controller.addMember(name);
 		
 		mainSequence();
 		
@@ -163,8 +167,8 @@ public class CUIManager implements UserInterface {
 		
 		String name = Console.promptString("Name >> ");
 		
-		if(Controller.rosterContainsMember(name))
-			Controller.removeMember(name);
+		if(controller.rosterContainsMember(name))
+			controller.removeMember(name);
 		else
 			Console.println("\nMember does not exist");
 		
@@ -214,19 +218,19 @@ public class CUIManager implements UserInterface {
 		Console.println("Input 'p' to mark present and 'a' to mark absent");
 		Console.printLines(1);
 		
-		LinkedList<String> names = Controller.getNames();
+		LinkedList<String> names = controller.getNames();
 		HashMap<String, String> attendance = new HashMap<String, String>();
 		
-		if(Controller.rosterIsEmpty())
+		if(controller.rosterIsEmpty())
 			Console.println("There are no members on the roster\n"
 					+ "Choose 'Manage Roster' to add members");
 		
 		for(String name : names) {
-			String marking = Console.promptMarking(name + " >> ", Controller.MARKS);
+			String marking = Console.promptMarking(name + " >> ", controller.MARKS);
 			attendance.put(name, marking);
 		}
 		
-		Controller.markAttendance(attendance, new GregorianCalendar());
+		controller.markAttendance(attendance, new GregorianCalendar());
 		
 		mainSequence();
 		
@@ -242,9 +246,9 @@ public class CUIManager implements UserInterface {
 		Console.println("Input the marking");
 		Console.println("Input 'p' to mark present");
 		
-		String marking = Console.promptMarking("Marking >> ", Controller.MARKS);
+		String marking = Console.promptMarking("Marking >> ", controller.MARKS);
 		
-		boolean success = Controller.markAttendance(name, marking, new GregorianCalendar());
+		boolean success = controller.markAttendance(name, marking, new GregorianCalendar());
 		if(!success) Console.println("Member does not exist\n");
 		
 		mainSequence();
@@ -257,7 +261,7 @@ public class CUIManager implements UserInterface {
 		
 		int[] date = Console.promptDate();
 		
-		LinkedList<String> names = Controller.getNames();
+		LinkedList<String> names = controller.getNames();
 		HashMap<String, String> attendance = new HashMap<String, String>();
 		
 		Console.printTitle("Mark All");
@@ -265,16 +269,16 @@ public class CUIManager implements UserInterface {
 		Console.println("Input 'p' to mark present");
 		Console.printLines(1);
 		
-		if(Controller.rosterIsEmpty())
+		if(controller.rosterIsEmpty())
 			Console.println("There are no members on the roster\n"
 					+ "Choose 'Manage Roster' to add members");
 		
 		for(String name : names) {
-			String marking = Console.promptMarking(name + " >> ", Controller.MARKS);
+			String marking = Console.promptMarking(name + " >> ", controller.MARKS);
 			attendance.put(name, marking);
 		}
 		
-		Controller.markAttendance(attendance, new GregorianCalendar(date[Console.YEAR], --date[Console.MONTH], date[Console.DAY]));
+		controller.markAttendance(attendance, new GregorianCalendar(date[Console.YEAR], --date[Console.MONTH], date[Console.DAY]));
 		
 		mainSequence();
 		
@@ -292,9 +296,9 @@ public class CUIManager implements UserInterface {
 		
 		Console.println("Input the marking");
 		Console.println("Input 'p' to mark present");
-		String marking = Console.promptMarking("Marking >> ", Controller.MARKS);
+		String marking = Console.promptMarking("Marking >> ", controller.MARKS);
 		
-		boolean success = Controller.markAttendance(name, marking, new GregorianCalendar(date[Console.YEAR], --date[Console.MONTH], date[Console.DAY]));
+		boolean success = controller.markAttendance(name, marking, new GregorianCalendar(date[Console.YEAR], --date[Console.MONTH], date[Console.DAY]));
 		if(!success) Console.println("Member does not exist\n");
 		
 		mainSequence();
@@ -304,11 +308,11 @@ public class CUIManager implements UserInterface {
 	private void printRosterSequence() {
 		Console.printTitle("Roster");
 		
-		if(Controller.rosterIsEmpty())
+		if(controller.rosterIsEmpty())
 			Console.println("There are no members on the roster\n"
 					+ "Choose 'Manage Roster' to add members");
 		else
-			Console.println(Controller.rosterTable());
+			Console.println(controller.rosterTable());
 		
 		mainSequence();
 	}
@@ -318,11 +322,11 @@ public class CUIManager implements UserInterface {
 		// Alert where the roster is being saved to
 		Console.printTitle("Save Roster");
 		Console.print("Saving roster to: ");
-		Console.println(Controller.rosterLocation());
+		Console.println(controller.rosterLocation());
 		
 		// Try to save the roster
 		try {
-			Controller.saveRoster();
+			controller.saveRoster();
 			Console.println("Saved!");
 		} catch(IOException ioe) {
 			Console.print("Error saving roster: ");

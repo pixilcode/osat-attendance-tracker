@@ -17,7 +17,7 @@ public class Controller {
 	private boolean usingGUI;
 	
 	public void run() {
-		(new CUIManager()).run();
+		(new CUIManager(this)).run();
 	}
 
 	public void loadRoster(String loc) throws IOException {
@@ -93,23 +93,33 @@ public class Controller {
 	public boolean rosterIsEmpty() {
 		return roster.getMembers().isEmpty();
 	}
-
-	public void parseArgs(String[] args) {
+	
+	/**
+	 * @param args the arguments to parse
+	 * @return whether the argument parsing succeeded or not
+	 */
+	public boolean parseArgs(String[] args) throws IOException {
 		
 		usingGUI = true;
+		Roster.Init init = Roster.Init.LOAD;
 		
-		if(args.length > 0) {
-			if(args[0] == "--no-gui")
+		for(int i = 0; i < args.length; i++) {
+			if(args[i] == "--no-gui")
 				usingGUI = false;
-			else {
-				try {
-				roster = new Roster(args[0], Roster.Init.LOAD);
-				} catch(IOException ioe) {
-					printHelp();
-					System.exit(0);
-				}
+			else if(args[i] == "--new"){
+				init = Roster.Init.NEW;
+			} else {
+				roster = new Roster(args[i], init);
 			}
 		}
+		
+		// Roster must have location when --new is used
+		// Otherwise, parseArgs fails
+		if(init.equals(Roster.Init.NEW) && roster == null)
+			return false;
+		
+		return true;
+		
 	}
 	
 	public boolean isUsingGUI() {
