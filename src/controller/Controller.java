@@ -29,17 +29,21 @@ public class Controller {
 		roster = new Roster(loc, Roster.Init.NEW);
 		loaded = true;
 	}
+
+	public void saveRoster() throws IOException {
+		roster.writeXMLfile();
+	}
 	
 	public boolean rosterIsLoaded() {
 		return loaded;
 	}
 
-	public String rosterLocation() {
-		return roster.getLocation().toString();
+	public boolean rosterIsEmpty() {
+		return roster.getMembers().isEmpty();
 	}
 
-	public void saveRoster() throws IOException {
-		roster.writeXMLfile();
+	public String rosterLocation() {
+		return roster.getLocation().toString();
 	}
 
 	public String rosterTable() {
@@ -77,10 +81,6 @@ public class Controller {
 		}
 		
 	}
-	
-	public boolean rosterContainsMember(String name) {
-		return roster.contains(new Name(name));
-	}
 
 	public void addMember(String name) {
 		roster.addPerson(name);
@@ -89,9 +89,16 @@ public class Controller {
 	public void removeMember(String name) {
 		roster.removePerson(new Name(name));
 	}
-
-	public boolean rosterIsEmpty() {
-		return roster.getMembers().isEmpty();
+	
+	public boolean rosterContainsMember(String name) {
+		return roster.contains(new Name(name));
+	}
+	
+	@SuppressWarnings("unlikely-arg-type")
+	public ArrayList<GregorianCalendar> getMemberAttendance(String name) {
+		ArrayList<Person> members = roster.getMembers();
+		Person member = members.get(members.indexOf(new Name(name)));
+		return member.getAttendance();
 	}
 	
 	/**
@@ -129,9 +136,36 @@ public class Controller {
 	public boolean isUsingGUI() {
 		return usingGUI;
 	}
-
-	private static void printHelp() {
-		System.out.println("HALP!");
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (loaded ? 1231 : 1237);
+		result = prime * result + ((roster == null) ? 0 : roster.hashCode());
+		result = prime * result + (usingGUI ? 1231 : 1237);
+		return result;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof Controller))
+			return false;
+		Controller other = (Controller) obj;
+		if (loaded != other.loaded)
+			return false;
+		if (roster == null) {
+			if (other.roster != null)
+				return false;
+		} else if (!roster.equals(other.roster))
+			return false;
+		if (usingGUI != other.usingGUI)
+			return false;
+		return true;
 	}
 
 }

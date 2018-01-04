@@ -3,7 +3,7 @@
   <person>
     <name>John Smith</name>
     <attendance>
-      <date>2017-010-01</date>
+      <date>2016-12-30</date>
     </attendance>
     <tasks/>
   </person>
@@ -16,7 +16,7 @@
     <name>Brooke Woodland</name>
     <attendance>
       <date>2017-12-29</date>
-      <date>2017-010-01</date>
+      <date>2016-12-30</date>
     </attendance>
     <tasks/>
   </person>
@@ -32,7 +32,7 @@
     <name>Addriana Poe</name>
     <attendance>
       <date>2017-12-29</date>
-      <date>2017-010-01</date>
+      <date>2016-12-30</date>
     </attendance>
     <tasks/>
   </person>

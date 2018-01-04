@@ -9,8 +9,8 @@ import org.junit.Test;
 
 public class ConsoleArgParserTest {
 	
-	Controller controller;
-	boolean correctArgs;
+	private Controller controller;
+	private boolean correctArgs;
 	
 	// Reused arguments
 	private static final String NO_GUI = "--no-gui";

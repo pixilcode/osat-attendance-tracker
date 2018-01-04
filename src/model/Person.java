@@ -15,6 +15,7 @@ public class Person {
 	 * Info associated with the person
 	 */
 	private HashMap<String, String> info;
+	
 	/*
 	
 	Recommended attributes for Robotics
@@ -209,6 +210,49 @@ public class Person {
 		return person;
 		
 		
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((attendance == null) ? 0 : attendance.hashCode());
+		result = prime * result + ((info == null) ? 0 : info.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((tasks == null) ? 0 : tasks.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof Person))
+			return false;
+		Person other = (Person) obj;
+		if (attendance == null) {
+			if (other.attendance != null)
+				return false;
+		} else if (!attendance.equals(other.attendance))
+			return false;
+		if (info == null) {
+			if (other.info != null)
+				return false;
+		} else if (!info.equals(other.info))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (tasks == null) {
+			if (other.tasks != null)
+				return false;
+		} else if (!tasks.equals(other.tasks))
+			return false;
+		return true;
 	}
 	
 }

@@ -7,20 +7,8 @@ public class EntryPoint {
 	 */
 	public static void main(String[] args) {
 		
-		//To test
-		test();
-		
-		//To run
-//		run();
+		(new Controller()).run();
 
-	}
-	
-	public static void run() {
-		(new Controller()).run();;
-	}
-	
-	public static void test() {
-		TestConsoleArgParser.run();
 	}
 
 }
