@@ -87,11 +87,11 @@ public class Controller {
 	}
 	
 	public void removeMember(String name) {
-		roster.removePerson(new Name(name));
+		roster.removePerson(name);
 	}
 	
 	public boolean rosterContainsMember(String name) {
-		return roster.contains(new Name(name));
+		return roster.contains(name);
 	}
 	
 	@SuppressWarnings("unlikely-arg-type")
@@ -105,31 +105,26 @@ public class Controller {
 	 * @param args the arguments to parse
 	 * @return whether the argument parsing succeeded or not
 	 */
-	public boolean parseArgs(String[] args) {
+	public void parseArgs(String[] args) throws IOException {
 		
 		usingGUI = true;
 		Roster.Init init = Roster.Init.LOAD;
 		
+		String location = null;
+		
 		for(int i = 0; i < args.length; i++) {
 			if(args[i] == "--no-gui")
 				usingGUI = false;
-			else if(args[i] == "--new"){
+			else if(args[i] == "--new")
 				init = Roster.Init.NEW;
-			} else {
-				try {
-					roster = new Roster(args[i], init);
-				} catch (IOException e) {
-					return false;
-				}
-			}
+			else
+				location = args[i];
 		}
 		
-		// Roster must have location when --new is used
-		// Otherwise, parseArgs fails
-		if(init.equals(Roster.Init.NEW) && roster == null)
-			return false;
-		
-		return true;
+		if(location != null) {
+			roster = new Roster(location, init);
+			loaded = true;
+		}
 		
 	}
 	

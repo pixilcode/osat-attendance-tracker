@@ -36,17 +36,14 @@ public class Roster implements Iterable<Person> {
 		case LOAD:
 			if(location.toFile().exists()) {
 				readXMLfile(location);
-			}
-			else {
+			} else {
 				throw new IOException("File doesn't exist");
 			}
 			break;
 		case NEW:
-			//If the location exists
 			if(location.toFile().exists()) {
 				throw new IOException("File already exists");
-			}
-			else {
+			} else {
 				writeXMLfile();
 			}
 			break;
@@ -174,9 +171,10 @@ public class Roster implements Iterable<Person> {
 			f.getParentFile().mkdirs();
 			f.createNewFile();
 		} catch(NullPointerException npe) {
-			//If the file doesn't have parent files, make one without referencing it
-			File f = new File(location.toString());
-			f.createNewFile();
+//			//If the file doesn't have parent files, make one without referencing it
+//			File f = new File(location.toString());
+//			f.createNewFile();
+			throw new IOException("Location does not exist");
 		}
 		
 		//Create the root element
@@ -220,13 +218,13 @@ public class Roster implements Iterable<Person> {
 	}
 	
 	@SuppressWarnings("unlikely-arg-type")
-	public void removePerson(Name name) {
-		members.remove(members.indexOf(name));
+	public void removePerson(String name) {
+		members.remove(new Name(name));
 	}
 	
 	@SuppressWarnings("unlikely-arg-type")
-	public boolean contains(Name name) {
-		return members.contains(name);
+	public boolean contains(String name) {
+		return members.contains(new Name(name));
 	}
 	
 	public Path getLocation() {
@@ -235,46 +233,6 @@ public class Roster implements Iterable<Person> {
 	
 	public ArrayList<Person> getMembers() {
 		return members;
-	}
-	
-	public Iterator<Person> iterator() {
-		return new RosterIterator(members);
-	}
-	
-	//For iteration in a foreach loop
-	private class RosterIterator implements Iterator<Person> {
-		
-		private final ArrayList<Person> members;
-		private int cursor;
-		
-		RosterIterator(ArrayList<Person> memberList) {
-			
-			cursor = 0;
-			members = memberList;
-			
-		}
-
-		public boolean hasNext() {
-			if(cursor >= members.size())
-				return false;
-			else
-				return true;
-		}
-		
-		public Person next() {
-			if(!hasNext())
-				throw new NoSuchElementException();
-			
-			return members.get(cursor++);
-			
-		}
-		
-		public void remove() {
-			throw new UnsupportedOperationException();
-		}
-		
-		
-		
 	}
 	
 	@Override
@@ -386,6 +344,46 @@ public class Roster implements Iterable<Person> {
 
 	public enum Init {
 		LOAD, NEW;
+	}
+	
+	public Iterator<Person> iterator() {
+		return new RosterIterator(members);
+	}
+	
+	//For iteration in a foreach loop
+	private class RosterIterator implements Iterator<Person> {
+		
+		private final ArrayList<Person> members;
+		private int cursor;
+		
+		RosterIterator(ArrayList<Person> memberList) {
+			
+			cursor = 0;
+			members = memberList;
+			
+		}
+
+		public boolean hasNext() {
+			if(cursor >= members.size())
+				return false;
+			else
+				return true;
+		}
+		
+		public Person next() {
+			if(!hasNext())
+				throw new NoSuchElementException();
+			
+			return members.get(cursor++);
+			
+		}
+		
+		public void remove() {
+			throw new UnsupportedOperationException();
+		}
+		
+		
+		
 	}
 	
 }

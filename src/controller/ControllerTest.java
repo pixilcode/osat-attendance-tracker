@@ -3,6 +3,7 @@ package controller;
 import static org.junit.Assert.*;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -18,22 +19,12 @@ public class ControllerTest {
 	
 	private Controller controller;
 	
-	private static final String NEW_FILE_LOC = "newFile.xml";
-	private static final String FILE_LOC = "test.xml";
+	private static final String NEW_FILE_LOC = System.getProperty("user.dir") + File.separator + "newFile.xml";
+	private static final String FILE_LOC = System.getProperty("user.dir") + File.separator + "test.xml";
 	private static final String STOCK_PERSON = "STOCK PERSON";
 	private static final String STOCK_PERSON2 = "STOCK PERSON 2";
 	private static final String PRESENT = "p";
 	
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-		
-	}
-
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-		
-	}
-
 	@Before
 	public void setUp() throws Exception {
 		controller = new Controller();
