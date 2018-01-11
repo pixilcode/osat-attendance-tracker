@@ -236,6 +236,11 @@ public class Roster implements Iterable<Person> {
 		return members;
 	}
 	
+	@SuppressWarnings("unlikely-arg-type")
+	public Person getMember(String name) {
+		return members.get(members.indexOf(new Name(name)));
+	}
+	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();

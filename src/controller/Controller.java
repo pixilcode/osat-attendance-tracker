@@ -74,7 +74,7 @@ public class Controller {
 		Date date = new Date(day);
 		
 		try {
-			Person person = roster.getMembers().get(roster.getMembers().indexOf(new Name(name)));
+			Person person = roster.getMember(name);
 			if(marking.equals(MARKS[PRESENT])) {
 				person.addAttendedDay(date);
 			}
@@ -100,8 +100,7 @@ public class Controller {
 	@SuppressWarnings("unlikely-arg-type")
 	public ArrayList<GregorianCalendar> getMemberAttendance(String name) {
 		
-		ArrayList<Person> members = roster.getMembers();
-		Person member = members.get(members.indexOf(new Name(name)));
+		Person member = roster.getMember(name);
 		
 		ArrayList<GregorianCalendar> attendance = new ArrayList<GregorianCalendar>();
 		

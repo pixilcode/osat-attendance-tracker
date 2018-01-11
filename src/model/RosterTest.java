@@ -86,6 +86,20 @@ public class RosterTest {
 	}
 	
 	@Test
+	public void testGetMember() throws Exception {
+		
+		roster = new Roster(NEW_FILE_LOC, Roster.Init.NEW);
+		Person expected = new Person("John");
+		
+		roster.addPerson("John");
+		
+		Person received = roster.getMember("John");
+		
+		assertEquals(expected, received);
+		
+	}
+	
+	@Test
 	public void testEquals() throws Exception {
 		
 		Roster roster1 = new Roster(FILE_LOC, Roster.Init.LOAD);
