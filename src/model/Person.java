@@ -1,8 +1,6 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
 
 import nu.xom.*;
@@ -31,7 +29,7 @@ public class Person {
 	/**
 	 * A collection of days that the person has attended
 	 */
-	private ArrayList<GregorianCalendar> attendance;
+	private ArrayList<Date> attendance;
 	
 	/**
 	 * The tasks assigned to the person
@@ -44,7 +42,7 @@ public class Person {
 	public Person(String name) {
 		this.name = name;
 		this.info = new HashMap<String, String>();
-		this.attendance = new ArrayList<GregorianCalendar>();
+		this.attendance = new ArrayList<Date>();
 		this.tasks = new ArrayList<Task>();
 	}
 	
@@ -55,7 +53,7 @@ public class Person {
 	public Person(String name, HashMap<String, String> info) {
 		this.name = name;
 		this.info = info;
-		this.attendance = new ArrayList<GregorianCalendar>();
+		this.attendance = new ArrayList<Date>();
 		this.tasks = new ArrayList<Task>();
 	}
 	
@@ -65,7 +63,7 @@ public class Person {
 	 * @param attendance a collection of days the person has attended
 	 * @param tasks
 	 */
-	public Person(String name, HashMap<String, String> info, ArrayList<GregorianCalendar> attendance, ArrayList<Task> tasks) {
+	public Person(String name, HashMap<String, String> info, ArrayList<Date> attendance, ArrayList<Task> tasks) {
 		this.name = name;
 		this.info = info;
 		this.attendance = attendance;
@@ -84,7 +82,7 @@ public class Person {
 		return info;
 	}
 	
-	public ArrayList<GregorianCalendar> getAttendance() {
+	public ArrayList<Date> getAttendance() {
 		return attendance;
 	}
 	
@@ -100,11 +98,11 @@ public class Person {
 		info.remove(attribute);
 	}
 	
-	public void addAttendedDay(GregorianCalendar date) {
+	public void addAttendedDay(Date date) {
 		attendance.add(date);
 	}
 	
-	public void removeAttendedDay(GregorianCalendar date) {
+	public void removeAttendedDay(Date date) {
 		attendance.remove(date);
 	}
 	
@@ -159,27 +157,27 @@ public class Person {
 		for(int i = 0; i < this.attendance.size(); i++) {
 			
 			//Get the next date
-			GregorianCalendar date = this.attendance.get(i);
+			Date date = this.attendance.get(i);
 			Element formattedDate = new Element("date");
 			
 			//Build date element in correct format (YYYY-MM-DD)
-			String year = Integer.toString(date.get(Calendar.YEAR));
-			String month = Integer.toString(date.get(Calendar.MONTH) + 1);
-			String day = Integer.toString(date.get(Calendar.DAY_OF_MONTH));
+			String year = Integer.toString(date.year());
+			String month = Integer.toString(date.month());
+			String day = Integer.toString(date.day());
 			
-			if(date.get(Calendar.DAY_OF_MONTH) < 10) {
+			if(date.day() < 10) {
 				day = "0" + day;
 			}
 			
-			if(date.get(Calendar.MONTH) < 10) {
+			if(date.month() < 10) {
 				month = "0" + month;
 			}
 			
-			if(date.get(Calendar.YEAR) < 10) {
+			if(date.year() < 10) {
 				year = "000" + year;
-			} else if(date.get(Calendar.YEAR) < 100) {
+			} else if(date.year() < 100) {
 				year = "00" + year;
-			} else if(date.get(Calendar.YEAR) < 1000) {
+			} else if(date.year() < 1000) {
 				year = "0" + year;
 			}
 			

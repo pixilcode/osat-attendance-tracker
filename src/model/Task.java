@@ -13,7 +13,7 @@ public class Task {
 	/**
 	 * The date by which the task should be done
 	 */
-	private GregorianCalendar due;
+	private Date due;
 	
 	public Task(String title, String description, int yearDue, int monthDue, int dayDue) {
 		
@@ -21,12 +21,12 @@ public class Task {
 		this.title = title;
 		this.description = description;
 		
-		//Set the day that the task is due (month is 0-based)
-		this.due = new GregorianCalendar(yearDue, --monthDue, dayDue);
+		//Set the day that the task is due
+		this.due = new Date(yearDue, monthDue, dayDue);
 		
 	}
 	
-	public Task(String title, String description, GregorianCalendar due) {
+	public Task(String title, String description, Date due) {
 		
 		//Set title and description of task
 		this.title = title;
@@ -53,11 +53,11 @@ public class Task {
 		this.description = description;
 	}
 
-	public GregorianCalendar getDue() {
+	public Date getDue() {
 		return due;
 	}
 
-	public void setDue(GregorianCalendar due) {
+	public void setDue(Date due) {
 		this.due = due;
 	}
 	
@@ -69,8 +69,8 @@ public class Task {
 		
 		GregorianCalendar today = new GregorianCalendar();
 		
-		//If today's year, month, and day is greater than or equal to the year, month, and day
-		if(today.get(Calendar.YEAR) >= due.get(Calendar.YEAR) && today.get(Calendar.MONTH) >= due.get(Calendar.MONTH) && today.get(Calendar.DAY_OF_MONTH) >= due.get(Calendar.DAY_OF_MONTH)) return true;
+		//If today's year, month, and day is greater than or equal to the year, month, and day (GregorianCalendar month is 0-based)
+		if(today.get(Calendar.YEAR) >= due.year() && (today.get(Calendar.MONTH) - 1) >= due.month() && today.get(Calendar.DAY_OF_MONTH) >= due.day()) return true;
 		else return false;
 		
 	}
@@ -91,25 +91,25 @@ public class Task {
 		description.appendChild(this.description);
 		
 		//Build due element in correct format (YYYY-MM-DD)
-		GregorianCalendar date = this.due;
+		Date date = this.due;
 		
-		String year = Integer.toString(date.get(Calendar.YEAR));
-		String month = Integer.toString(date.get(Calendar.MONTH) + 1);
-		String day = Integer.toString(date.get(Calendar.DAY_OF_MONTH));
+		String year = Integer.toString(date.year());
+		String month = Integer.toString(date.month());
+		String day = Integer.toString(date.day());
 		
-		if(date.get(Calendar.DAY_OF_MONTH) < 10) {
+		if(date.day() < 10) {
 			day = "0" + day;
 		}
 		
-		if(date.get(Calendar.MONTH) < 10) {
+		if(date.month() < 10) {
 			month = "0" + month;
 		}
 		
-		if(date.get(Calendar.YEAR) < 10) {
+		if(date.year() < 10) {
 			year = "000" + year;
-		} else if(date.get(Calendar.YEAR) < 100) {
+		} else if(date.year() < 100) {
 			year = "00" + year;
-		} else if(date.get(Calendar.YEAR) < 1000) {
+		} else if(date.year() < 1000) {
 			year = "0" + year;
 		}
 		

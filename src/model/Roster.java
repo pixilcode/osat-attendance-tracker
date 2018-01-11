@@ -93,9 +93,9 @@ public class Roster implements Iterable<Person> {
 					
 				}
 				
-				//Get attendance by getting each date and converting it to a GregorianCalendar
+				//Get attendance by getting each date
 				//Parameter for Person object
-				ArrayList<GregorianCalendar> attendance = new ArrayList<GregorianCalendar>();
+				ArrayList<Date> attendance = new ArrayList<Date>();
 				Elements attendanceElements = person.getFirstChildElement("attendance").getChildElements();
 				
 				for(int j = 0; j < attendanceElements.size(); j++) {
@@ -108,8 +108,8 @@ public class Roster implements Iterable<Person> {
 					int month = Integer.parseInt(date.substring(5, 7));
 					int day = Integer.parseInt(date.substring(8));
 					
-					//Convert to a GregorianCalendar and add to array
-					attendance.add(new GregorianCalendar(year, month - 1, day));
+					//Convert to a Date and add to array
+					attendance.add(new Date(year, month, day));
 					
 				}
 				
@@ -137,8 +137,8 @@ public class Roster implements Iterable<Person> {
 					int month = Integer.parseInt(date.substring(5, 7));
 					int day = Integer.parseInt(date.substring(8));
 					
-					//Convert to a GregorianCalendar
-					GregorianCalendar due = new GregorianCalendar(year, month, day);
+					//Convert to a Date
+					Date due = new Date(year, month, day);
 					
 					//Create new Task and add to array
 					tasks.add(new Task(title, description, due));
@@ -268,15 +268,17 @@ public class Roster implements Iterable<Person> {
 		
 		// Create the divider between cells
 		// as well as something to draw spaces from
+		StringBuilder mainDivider = new StringBuilder();
 		StringBuilder divider = new StringBuilder();
 		StringBuilder spaces = new StringBuilder();
 		for(int i = 0; i < columnLength[0] + columnLength[1] + 3; i++) {
+			mainDivider.append('=');
 			divider.append('-');
 			spaces.append(' ');
 		}
 		
-		// Build the title => |   Names   | Days Present |
-		builder.append(divider).append('\n');
+		// Build the title => |Names      |Days Present|
+		builder.append(mainDivider).append('\n');
 		builder.append(
 				'|').append(
 				"Name").append(
@@ -286,10 +288,14 @@ public class Roster implements Iterable<Person> {
 				spaces.substring("Days Present".length(), columnLength[1])).append(
 				'|').append(
 				'\n');
+		builder.append(mainDivider).append('\n');
+		
+		boolean first = true;
 		
 		for(Person member : members) {
 			
-			builder.append(divider).append('\n');
+			if(first) first = false;
+			else builder.append(divider).append('\n');
 			
 			String name = member.getName();
 			int nameLength = name.length();
@@ -307,7 +313,7 @@ public class Roster implements Iterable<Person> {
 					'\n');
 		}
 		
-		builder.append(divider).append('\n');
+		builder.append(divider);
 		
 		return builder.toString();
 	}

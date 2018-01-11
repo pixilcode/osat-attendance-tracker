@@ -112,5 +112,24 @@ public class RosterTest {
 		}
 		
 	}
+	
+	@Test
+	public void testTable() throws Exception {
+		
+		Roster roster = new Roster(NEW_FILE_LOC, Roster.Init.NEW);
+		roster.addPerson("John Smith");
+		roster.addPerson("James");
+		
+		String table =	"=========================" + "\n" +
+						"|Name      |Days Present|" + "\n" +
+						"=========================" + "\n" +
+						"|John Smith|0           |" + "\n" +
+						"-------------------------" + "\n" +
+						"|James     |0           |" + "\n" +
+						"-------------------------";
+		
+		assertEquals(table, roster.toTable());
+		
+	}
 
 }

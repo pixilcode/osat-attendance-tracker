@@ -3,17 +3,16 @@ package controller;
 import static org.junit.Assert.*;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
+
+import model.Date;
 
 public class ControllerTest {
 	
@@ -74,7 +73,9 @@ public class ControllerTest {
 	public void testMarkAttendance() throws Exception {
 		
 		// Test marking a single person
-		GregorianCalendar today = new GregorianCalendar();
+		// Need to create a date object because that is how attendance is stored
+		Date todayDate = new Date();
+		GregorianCalendar today = todayDate.toGregorianCalendar();
 		
 		controller.newRoster(NEW_FILE_LOC);
 		controller.addMember(STOCK_PERSON);
@@ -86,7 +87,8 @@ public class ControllerTest {
 		assertEquals(controller.getMemberAttendance(STOCK_PERSON), attendance);
 		
 		// Test marking multiple people
-		GregorianCalendar lastYear = new GregorianCalendar();
+		Date lastYearDate = new Date(todayDate.year()-1, todayDate.month(), todayDate.day());
+		GregorianCalendar lastYear = lastYearDate.toGregorianCalendar();
 		lastYear.set(today.get(Calendar.YEAR) - 1, today.get(Calendar.MONTH), today.get(Calendar.DATE));
 		
 		HashMap<String, String> attendanceMarks = new HashMap<String, String>();

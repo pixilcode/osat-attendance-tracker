@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.*;
 
 import model.*;
+import model.Date;
 import view.consoleUI.*;
 
 public class Controller {
@@ -70,10 +71,12 @@ public class Controller {
 	@SuppressWarnings("unlikely-arg-type")
 	public boolean markAttendance(String name, String marking, GregorianCalendar day) {
 		
+		Date date = new Date(day);
+		
 		try {
 			Person person = roster.getMembers().get(roster.getMembers().indexOf(new Name(name)));
 			if(marking.equals(MARKS[PRESENT])) {
-				person.addAttendedDay(day);
+				person.addAttendedDay(date);
 			}
 			return true;
 		} catch(ArrayIndexOutOfBoundsException ae) {
@@ -96,9 +99,17 @@ public class Controller {
 	
 	@SuppressWarnings("unlikely-arg-type")
 	public ArrayList<GregorianCalendar> getMemberAttendance(String name) {
+		
 		ArrayList<Person> members = roster.getMembers();
 		Person member = members.get(members.indexOf(new Name(name)));
-		return member.getAttendance();
+		
+		ArrayList<GregorianCalendar> attendance = new ArrayList<GregorianCalendar>();
+		
+		for(Date day : member.getAttendance()) {
+			attendance.add(new GregorianCalendar(day.year(), day.month(), day.day()));
+		}
+		
+		return attendance;
 	}
 	
 	/**

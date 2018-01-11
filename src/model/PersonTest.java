@@ -77,12 +77,24 @@ public class PersonTest {
 		Person p1 = new Person("John");
 		assertEquals(0, p1.getAttendance().size());
 		
-		GregorianCalendar today = new GregorianCalendar();
+		Date today = new Date();
 		p1.addAttendedDay(today);
 		assertTrue(p1.getAttendance().contains(today));
 		assertEquals(1, p1.getAttendance().size());
 		
+		Date christmas = new Date(new GregorianCalendar(2017, 12, 25));
+		p1.addAttendedDay(christmas);
+		assertTrue(p1.getAttendance().contains(christmas));
+		assertEquals(2, p1.getAttendance().size());
+		
+		Date newYearsEve = new Date(new GregorianCalendar(2018, 1, 1));
+		p1.addAttendedDay(newYearsEve);
+		assertTrue(p1.getAttendance().contains(newYearsEve));
+		assertEquals(3, p1.getAttendance().size());
+		
 		p1.removeAttendedDay(today);
+		p1.removeAttendedDay(newYearsEve);
+		p1.removeAttendedDay(christmas);
 		assertEquals(0, p1.getAttendance().size());
 		
 	}
