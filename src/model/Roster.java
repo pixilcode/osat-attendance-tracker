@@ -174,6 +174,7 @@ public class Roster implements Iterable<Person> {
 //			//If the file doesn't have parent files, make one without referencing it
 //			File f = new File(location.toString());
 //			f.createNewFile();
+			// Above method makes a file in the Java file
 			throw new IOException("Location does not exist");
 		}
 		

@@ -40,7 +40,6 @@ public class Person {
 	
 	/**
 	 * @param name the name of the person
-	 * @param tempID the temporary ID of the person
 	 */
 	public Person(String name) {
 		this.name = name;
@@ -52,7 +51,6 @@ public class Person {
 	/**
 	 * @param name the name of the person
 	 * @param info a collection of info about the person
-	 * @param tempID the temporary ID of the person
 	 */
 	public Person(String name, HashMap<String, String> info) {
 		this.name = name;
@@ -66,7 +64,6 @@ public class Person {
 	 * @param info a collection of info about the person
 	 * @param attendance a collection of days the person has attended
 	 * @param tasks
-	 * @param tempID
 	 */
 	public Person(String name, HashMap<String, String> info, ArrayList<GregorianCalendar> attendance, ArrayList<Task> tasks) {
 		this.name = name;

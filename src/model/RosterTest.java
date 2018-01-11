@@ -91,6 +91,8 @@ public class RosterTest {
 		Roster roster1 = new Roster(FILE_LOC, Roster.Init.LOAD);
 		Roster roster2 = new Roster(FILE_LOC, Roster.Init.LOAD);
 		
+		assertEquals(roster1, roster1);
+		assertEquals(roster1.hashCode(), roster1.hashCode());
 		assertEquals(roster1, roster2);
 		assertEquals(roster1.hashCode(), roster2.hashCode());
 		
