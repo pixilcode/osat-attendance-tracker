@@ -226,7 +226,7 @@ public class CUIManager implements UserInterface {
 					+ "Choose 'Manage Roster' to add members");
 		
 		for(String name : names) {
-			String marking = Console.promptMarking(name + " >> ", controller.MARKS);
+			String marking = Console.promptMarking(name + " >> ", Controller.MARKS);
 			attendance.put(name, marking);
 		}
 		
@@ -246,7 +246,7 @@ public class CUIManager implements UserInterface {
 		Console.println("Input the marking");
 		Console.println("Input 'p' to mark present");
 		
-		String marking = Console.promptMarking("Marking >> ", controller.MARKS);
+		String marking = Console.promptMarking("Marking >> ", Controller.MARKS);
 		
 		boolean success = controller.markAttendance(name, marking, new GregorianCalendar());
 		if(!success) Console.println("Member does not exist\n");
@@ -274,7 +274,7 @@ public class CUIManager implements UserInterface {
 					+ "Choose 'Manage Roster' to add members");
 		
 		for(String name : names) {
-			String marking = Console.promptMarking(name + " >> ", controller.MARKS);
+			String marking = Console.promptMarking(name + " >> ", Controller.MARKS);
 			attendance.put(name, marking);
 		}
 		
@@ -296,7 +296,7 @@ public class CUIManager implements UserInterface {
 		
 		Console.println("Input the marking");
 		Console.println("Input 'p' to mark present");
-		String marking = Console.promptMarking("Marking >> ", controller.MARKS);
+		String marking = Console.promptMarking("Marking >> ", Controller.MARKS);
 		
 		boolean success = controller.markAttendance(name, marking, new GregorianCalendar(date[Console.YEAR], --date[Console.MONTH], date[Console.DAY]));
 		if(!success) Console.println("Member does not exist\n");

@@ -68,7 +68,6 @@ public class Controller {
 		
 	}
 	
-	@SuppressWarnings("unlikely-arg-type")
 	public boolean markAttendance(String name, String marking, GregorianCalendar day) {
 		
 		Date date = new Date(day);
@@ -97,7 +96,6 @@ public class Controller {
 		return roster.contains(name);
 	}
 	
-	@SuppressWarnings("unlikely-arg-type")
 	public ArrayList<GregorianCalendar> getMemberAttendance(String name) {
 		
 		Person member = roster.getMember(name);
