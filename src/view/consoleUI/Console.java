@@ -6,7 +6,7 @@ import java.util.Scanner;
 final class Console {
 	
 	private static final Scanner in = new Scanner(System.in);
-	private static final PrintStream out = System.out;
+	private static PrintStream out = System.out;
 	private static StringBuilder string;
 	
 	public static final int YEAR = 0;
@@ -47,6 +47,13 @@ final class Console {
 		out.println(obj);
 	}
 	
+	public static void printOptions(String[] options) {
+		
+		for(int o = 1; o <= options.length; o++)
+			out.println(o + ". " + options[o-1]);
+		
+	}
+	
 	static String readLine() {
 		return in.nextLine();
 	}
@@ -80,7 +87,7 @@ final class Console {
 		
 	}
 	
-	public static int[] promptDate() {
+	static int[] promptDate() {
 		
 		int[] date = new int[3];
 		date[YEAR] = promptInt("Year [YYYY] >> ");
@@ -91,7 +98,7 @@ final class Console {
 		
 	}
 	
-	public static String promptMarking(String prompt, String[] availableMarkings) {
+	static String promptMarking(String prompt, String[] availableMarkings) {
 		
 		while(true) {
 			String marking = promptString(prompt);
@@ -106,6 +113,10 @@ final class Console {
 			if(marking.equals(givenMarking)) return true;
 		return false;
 		
+	}
+	
+	static void updateOut() {
+		out = System.out;
 	}
 	
 }

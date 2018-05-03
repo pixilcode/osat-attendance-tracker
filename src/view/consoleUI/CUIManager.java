@@ -36,9 +36,11 @@ public class CUIManager implements UserInterface {
 		
 		Console.printTitle("Welcome");
 		Console.println("Load a roster or make a new one");
-		Console.println("1. Load Roster");
-		Console.println("2. New Roster");
-		Console.println("3. Exit");
+		Console.printOptions(new String[] {
+				"Load Roster",
+				"New Roster",
+				"Exit"
+		});
 		
 		int option = Console.promptOption(3);
 		switch(option) {
@@ -90,11 +92,13 @@ public class CUIManager implements UserInterface {
 		
 		Console.printTitle("ON A ROLL");
 		Console.println("What would you like to do?");
-		Console.println("1. Manage Roster");
-		Console.println("2. Mark Roster");
-		Console.println("3. Print Roster Summary");
-		Console.println("4. Save Roster");
-		Console.println("5. Exit");
+		Console.printOptions(new String[] {
+				"Manage Roster",
+				"Mark Roster",
+				"Print Roster Summary",
+				"Save Roster",
+				"Exit"
+		});
 		
 		int option = Console.promptOption(5);
 		switch (option) {
@@ -119,15 +123,17 @@ public class CUIManager implements UserInterface {
 		
 		Console.printTitle("Manage Roster");
 		Console.println("What would you like to do?");
-		Console.println("1. Add a member");
-		Console.println("2. Remove a member");
-//		Console.println("3. Add member info");
-//		Console.println("4. Edit member info");
-//		Console.println("5. Remove member info");
-//		Console.println("6. Add task to member");
-//		Other task related stuff
-		Console.println("3. Return to Main Menu");
-		Console.println("4. Exit");
+		Console.printOptions(new String[] {
+				"Add a member",
+				"Remove a member",
+//				"Add member info",
+//				"Edit member info",
+//				"Remove member info",
+//				"Add task to member",
+//				"Other task related stuff",
+				"Return to Main Menu",
+				"Exit"
+		});
 		
 		int option = Console.promptOption(4);
 		
