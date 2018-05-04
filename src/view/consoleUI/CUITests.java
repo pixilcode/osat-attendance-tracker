@@ -3,6 +3,7 @@ package view.consoleUI;
 import static org.junit.Assert.*;
 
 import java.io.File;
+import java.io.InputStream;
 import java.io.PrintStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -14,6 +15,8 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import controller.Controller;
 
 public class CUITests {
 
@@ -114,6 +117,26 @@ public class CUITests {
 	
 	@Test
 	public void testWelcomeSequence() throws Exception {
+		
+		Sequence welcome = new Sequence("welcome");
+		welcome.run();
+		
+		String expected = "";
+		Scanner outputFile = new Scanner("outFile.txt");
+		
+		expected += "=======" + "\n" +
+					"Welcome" + "\n" +
+					"=======" + "\n";
+		expected += "Load a roster or make a new one" + "\n";
+		expected += "1. Load Roster" + "\n";
+		expected += "2. New Roster" + "\n";
+		expected += "3. Exit" + "\n";
+		
+		String output = "";
+		while(outputFile.hasNextLine())
+			output += outputFile.nextLine() + "\n";
+		
+		assertEquals(expected, output);
 		
 	}
 

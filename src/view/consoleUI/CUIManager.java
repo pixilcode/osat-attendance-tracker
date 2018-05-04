@@ -186,12 +186,14 @@ public class CUIManager implements UserInterface {
 		
 		Console.printTitle("Mark Roster");
 		Console.println("What would you like to do?");
-		Console.println("1. Mark all members");
-		Console.println("2. Mark one member");
-		Console.println("3. Mark all members for a previous day");
-		Console.println("4. Mark one member for a previous day");
-		Console.println("5. Return to the Main Menu");
-		Console.println("6. Exit");
+		Console.printOptions(new String[] {
+				"Mark all members",
+				"Mark one member",
+				"Mark all members for a previous day",
+				"Mark one member for a previous day",
+				"Return to the Main Menu",
+				"Exit"
+		});
 		
 		int option = Console.promptOption(6);
 		
