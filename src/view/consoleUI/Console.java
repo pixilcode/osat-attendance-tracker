@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 final class Console {
 	
-	private static final Scanner in = new Scanner(System.in);
+	private static Scanner in = new Scanner(System.in);
 	private static PrintStream out = System.out;
 	private static StringBuilder string;
 	
@@ -25,16 +25,21 @@ final class Console {
 	static void printTitle(String title) {
 		
 		// Add 1 for the '\n' character at the end of each line
-		string = new StringBuilder((title.length() + 1)*3);
+		string = new StringBuilder( (title.length() + 1) * 3);
+		
+		string.append('\n').append('\n');
+		
 		for(int i = 0; i < title.length(); i++)
 			string.append('=');
 		string.append('\n');
+		
 		string.append(title);
 		string.append('\n');
-		string.append(string.substring(0, title.length()));
+		
+		for(int i = 0; i < title.length(); i++)
+			string.append('=');
 		string.append('\n');
 		
-		out.print('\n');
 		out.print(string);
 		
 	}
@@ -45,13 +50,6 @@ final class Console {
 	
 	static void println(Object obj) {
 		out.println(obj);
-	}
-	
-	public static void printOptions(String[] options) {
-		
-		for(int o = 1; o <= options.length; o++)
-			out.println(o + ". " + options[o-1]);
-		
 	}
 	
 	static String readLine() {
@@ -102,21 +100,34 @@ final class Console {
 		
 		while(true) {
 			String marking = promptString(prompt);
-			if(markingIsIn(availableMarkings, marking)) return marking;
+			if(markingIsIn(availableMarkings, marking))
+				return marking;
 		}
 		
 	}
-
+	
 	private static boolean markingIsIn(String[] availableMarkings, String givenMarking) {
 		
 		for(String marking : availableMarkings)
-			if(marking.equals(givenMarking)) return true;
+			if(marking.equals(givenMarking))
+				return true;
 		return false;
 		
 	}
 	
 	static void updateOut() {
 		out = System.out;
+	}
+	
+	static void updateIn() {
+		in = new Scanner(System.in);
+	}
+	
+	public static void printOptions(Sequence[] options) {
+		
+		for(int o = 1; o <= options.length; o++)
+			out.println(o + ". " + options[o - 1]);
+		
 	}
 	
 }

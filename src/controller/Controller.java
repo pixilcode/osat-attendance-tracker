@@ -1,26 +1,30 @@
 package controller;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.LinkedList;
 
-import model.*;
 import model.Date;
-import view.consoleUI.*;
+import model.Person;
+import model.Roster;
+import view.consoleUI.Sequence;
 
 public class Controller {
 	
 	public static final int PRESENT = 0;
 	public static final int ABSENT = 1;
-	public static final String[] MARKS = {"p", "a"};
+	public static final String[] MARKS = { "p", "a" };
 	
 	private Roster roster;
 	private boolean loaded;
 	private boolean usingGUI;
 	
 	public void run() {
-		(new CUIManager(this)).run();
+		Sequence.setController(this);
 	}
-
+	
 	public void loadRoster(String loc) throws IOException {
 		roster = new Roster(loc, Roster.Init.LOAD);
 		loaded = true;
@@ -30,7 +34,7 @@ public class Controller {
 		roster = new Roster(loc, Roster.Init.NEW);
 		loaded = true;
 	}
-
+	
 	public void saveRoster() throws IOException {
 		roster.writeXMLfile();
 	}
@@ -38,19 +42,19 @@ public class Controller {
 	public boolean rosterIsLoaded() {
 		return loaded;
 	}
-
+	
 	public boolean rosterIsEmpty() {
 		return roster.getMembers().isEmpty();
 	}
-
+	
 	public String rosterLocation() {
 		return roster.getLocation().toString();
 	}
-
+	
 	public String rosterTable() {
 		return roster.toTable();
 	}
-
+	
 	public LinkedList<String> getNames() {
 		
 		LinkedList<String> names = new LinkedList<String>();
@@ -59,7 +63,6 @@ public class Controller {
 		}
 		return names;
 	}
-
 	
 	public void markAttendance(HashMap<String, String> attendance, GregorianCalendar day) {
 		
@@ -83,7 +86,7 @@ public class Controller {
 		}
 		
 	}
-
+	
 	public void addMember(String name) {
 		roster.addPerson(name);
 	}
@@ -110,7 +113,8 @@ public class Controller {
 	}
 	
 	/**
-	 * @param args the arguments to parse
+	 * @param args
+	 *            the arguments to parse
 	 * @return whether the argument parsing succeeded or not
 	 */
 	public void parseArgs(String[] args) throws IOException {
@@ -145,30 +149,30 @@ public class Controller {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + (loaded ? 1231 : 1237);
-		result = prime * result + ((roster == null) ? 0 : roster.hashCode());
+		result = prime * result + ( (roster == null) ? 0 : roster.hashCode());
 		result = prime * result + (usingGUI ? 1231 : 1237);
 		return result;
 	}
 	
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if(this == obj)
 			return true;
-		if (obj == null)
+		if(obj == null)
 			return false;
-		if (!(obj instanceof Controller))
+		if(! (obj instanceof Controller))
 			return false;
 		Controller other = (Controller) obj;
-		if (loaded != other.loaded)
+		if(loaded != other.loaded)
 			return false;
-		if (roster == null) {
-			if (other.roster != null)
+		if(roster == null) {
+			if(other.roster != null)
 				return false;
-		} else if (!roster.equals(other.roster))
+		} else if(!roster.equals(other.roster))
 			return false;
-		if (usingGUI != other.usingGUI)
+		if(usingGUI != other.usingGUI)
 			return false;
 		return true;
 	}
-
+	
 }
