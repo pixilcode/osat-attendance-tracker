@@ -161,7 +161,6 @@ public enum Sequence implements UserInterface {
 			
 			Console.printTitle("Load Roster");
 			Console.printLines(1);
-			Console.println("Warning: Not entering the full path may cause problems");
 			Console.printLines(1);
 			
 			String loc = Console.promptString("Roster Path >> ");
@@ -184,7 +183,6 @@ public enum Sequence implements UserInterface {
 			
 			Console.printTitle("New Roster");
 			Console.printLines(1);
-			Console.println("Warning: Not entering the full path may cause problems");
 			Console.printLines(1);
 			
 			String dir = Console.promptString("Roster Directory >> ");
@@ -312,6 +310,9 @@ public enum Sequence implements UserInterface {
 		
 		String name = Console.promptString("Name >> ");
 		
+		// TODO Add test here to see if the member exists ( as well as in
+		// markOnePrevious() )
+		
 		Console.println("Input the marking");
 		Console.println("Input 'p' to mark present");
 		
@@ -414,6 +415,31 @@ public enum Sequence implements UserInterface {
 	}
 	
 	private static Sequence exit() {
+		
+		Console.printTitle("EXIT?");
+		
+		String save = "";
+		
+		while(!save.matches("y|n|c"))
+			save = Console.promptString(
+						"Would you like to save your roster?\n"
+						+ "(Y(es)/N(o)/C(ancel))"
+						).substring(0, 1).toLowerCase();
+		
+		if(save.equals("y")) {
+			Console.print("Saving roster to: ");
+			Console.println(controller.rosterLocation());
+			
+			// Try to save the roster
+			try {
+				controller.saveRoster();
+				Console.println("Saved!");
+			} catch(IOException ioe) {
+				Console.print("Error saving roster: ");
+				Console.println(ioe.getMessage());
+			}
+		} else if(save.equals("c"))
+			return MAIN_MENU;
 		
 		System.exit(0);
 		return MAIN_MENU;

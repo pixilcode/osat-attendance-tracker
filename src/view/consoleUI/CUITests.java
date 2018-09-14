@@ -225,19 +225,23 @@ public class CUITests {
 	@Test
 	public void testMarkOptions() throws Exception {
 		
+		// THIS TEST NEEDS FIXING WHEN ACCESS TO MEMBERS IS
+		// ALPHABETIZED AND ACCESS TO MEMBER ATTENDANCE IS
+		// FIXED
+		
 		c.loadRoster("test.xml");
 		
 		String input = "";
 		
 		// Mark STOCK PERSON as present and STOCK PERSON 2 as absent
-		input += "p\n" + "a\n";
+		input += "a\n" + "p\n";
 		
 		// Mark STOCK PERSON 2 as present
 		input += "STOCK PERSON 2\n" + "p\n";
 		
 		// Mark STOCK PERSON as present and STOCK PERSON 2 as absent
 		// on January 1, 2000
-		input += "2000\n" + "1\n" + "1\n" + "p\n" + "a\n";
+		input += "2000\n" + "1\n" + "1\n" + "a\n" + "p\n";
 		
 		// Mark STOCK PERSON 2 as present
 		// on January 1, 2000
@@ -250,6 +254,10 @@ public class CUITests {
 		Sequence result = seq.run();
 		
 		// TODO fix this to ensure that the date added is today
+		// TODO fix name system to ensure that names are presented
+		// alphabetically (as well as when saving to XML file, etc.)
+		// This will fix having to check for STOCK PERSON 2 before STOCK PERSON
+		
 		// Consider limiting access to member attendance (don't return the
 		// HashMap for attendance)
 		
