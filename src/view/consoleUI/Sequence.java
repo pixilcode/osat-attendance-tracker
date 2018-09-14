@@ -128,6 +128,13 @@ public enum Sequence implements UserInterface {
 			return exit();
 		}
 		
+	},
+	END("End") {
+		
+		public Sequence run() {
+			return END;
+		}
+		
 	};
 	
 	private final String id;
@@ -423,7 +430,7 @@ public enum Sequence implements UserInterface {
 		while(!save.matches("y|n|c"))
 			save = Console.promptString(
 						"Would you like to save your roster?\n"
-						+ "(Y(es)/N(o)/C(ancel))"
+						+ "(Y(es)/N(o)/C(ancel)) >> "
 						).substring(0, 1).toLowerCase();
 		
 		if(save.equals("y")) {
@@ -441,8 +448,7 @@ public enum Sequence implements UserInterface {
 		} else if(save.equals("c"))
 			return MAIN_MENU;
 		
-		System.exit(0);
-		return MAIN_MENU;
+		return END;
 		
 	}
 	
@@ -479,6 +485,7 @@ public enum Sequence implements UserInterface {
 		controller = c;
 	}
 	
+	@Override
 	public String toString() {
 		return id;
 	}
