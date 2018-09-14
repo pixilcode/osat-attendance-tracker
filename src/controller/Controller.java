@@ -22,7 +22,15 @@ public class Controller {
 	private boolean usingGUI;
 	
 	public void run() {
+		// if(usingGUI) doStuff
 		Sequence.setController(this);
+		Sequence init = Sequence.WELCOME;
+		
+		if(loaded)
+			init = Sequence.MAIN_MENU;
+		
+		while(true)
+			init.run();
 	}
 	
 	public void loadRoster(String loc) throws IOException {

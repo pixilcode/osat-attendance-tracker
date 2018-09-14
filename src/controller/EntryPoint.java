@@ -1,5 +1,7 @@
 package controller;
 
+import java.io.IOException;
+
 public class EntryPoint {
 
 	/**
@@ -7,7 +9,15 @@ public class EntryPoint {
 	 */
 	public static void main(String[] args) {
 		
-		(new Controller()).run();
+		Controller c = new Controller();
+		
+		try {
+			c.parseArgs(args);
+		} catch(IOException ioe) {
+			System.err.println("Error: " + ioe.getMessage());
+		}
+		
+		c.run();
 
 	}
 
