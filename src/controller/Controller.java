@@ -29,6 +29,7 @@ public class Controller {
 		if(loaded)
 			init = Sequence.MAIN_MENU;
 		
+		// TODO Fix this so that it does not loop even when you try to exit
 		while(true)
 			init.run();
 	}
