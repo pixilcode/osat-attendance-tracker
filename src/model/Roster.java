@@ -187,19 +187,23 @@ public class Roster implements Iterable<Person> {
 	// Throws IOException so that UI can alert person of error
 	public void writeXMLfile() throws IOException {
 		
-		try {
-			// If the file does not exist, make it
-			File f = new File(location.toString());
+		// If the file does not exist, make it
+		File f = new File(location.toString());
+		if(f.getParentFile() != null) {
 			f.getParentFile().mkdirs();
 			f.createNewFile();
-		} catch(NullPointerException npe) {
+		} else {
 			// //If the file doesn't have parent files, make one without
 			// referencing it
 			// File f = new File(location.toString());
 			// f.createNewFile();
-			// Above method makes a file in the Java file
+			// Above method makes a file wherever the JAR file
+			// is called
+			// Actually, so does the above if there is a parent file
+			// attached but path is still relative
 			
 			// TODO This is where 'local' files are created
+			// Think twice about commenting out ^
 			throw new IOException("Location does not exist");
 		}
 		
